@@ -1,0 +1,708 @@
+
+<nav class="navbar py-4">
+  <div class="container-fluid">
+  <div class="d-flex">
+    <div class="bg-white rounded-2 shadow p-2">
+      <a href="{{route('index')}}"><img class="icon" src="/img/logo.png" alt=""></a>
+      
+    </div>
+  </div>
+  <div class="d-flex">
+    <div class="bg-white rounded-2 shadow p-2 me-4" >
+      <div class="d-flex">
+      <img class="icon me-4" src="/img/help.png" alt="">
+      <img class="icon me-4" src="/img/settings.png" alt="">
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+  
+        <a href="route('logout')"
+                onclick="event.preventDefault();
+                            this.closest('form').submit();">
+            <img src="/img/logout.png" class="icon" alt="">
+        </a>
+      </form>
+    </div>
+    </div>
+    <div class="bg-white rounded-2 shadow p-2">
+      <a href="{{route('index')}}"><img class="icon rounded-circle" src="/img/avatar.jpg" alt=""></a>
+    </div>
+  </div>
+  </div> 
+</nav>
+<div class="container-fluid">
+  <div id="success_message"></div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-md-1 col-12 pb-xl-0 pb-md-0 pb-4">  {{-- sticky-md-top fixed-top --}}
+      <div class="sidebar d-md-inline-flex d-flex flex-md-column sticky-md-top">
+        <div class="col-md-12 col-10 pb-xl-0 mb-md-4 mb-0 pe-md-0 pe-4">
+          <div class="bg-white rounded-2 shadow p-2 d-md-inline-flex d-flex flex-md-column flex-rows justify-content-around">
+              <img class="icon mb-md-4 mb-0 add" src="/img/note.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+              <img class="icon mb-md-4 mb-0 add" src="/img/checklist.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+              <img class="icon add" src="/img/image.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+          </div>
+        </div>
+        <div class="col-md-12 col-2 pb-xl-0 sticky-md-top">
+          <div class="bg-white rounded-2 shadow p-2 d-md-inline-flex d-flex flex-md-column flex-rows justify-content-around">
+            <img class="icon" src="/img/tag.png" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-11 col-12"> 
+      <div class="row" id="FetchNotes" data-masonry='{"percentPosition": true }'>  
+
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card shadow edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body">
+              <h5 class="card-title">Заголовок...</h5>
+              <p class="card-text">Заметка...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card shadow edit_note" value="1000">
+            <img src="/img/notes-img.jpg" class="card-img" alt="...">
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card shadow edit_note" value="1000">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Checkbox
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Checkbox
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label checked" for="flexCheckChecked">
+                  Checked checkbox
+                </label> 
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {{-- Notes --}}
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- V2 -->
+
+
+
+<div class="container-fluid">
+  <div id="success_message"></div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-md-1 col-12 pb-xl-0 pb-md-0 pb-4">  {{-- sticky-md-top fixed-top --}}
+      <div class="sidebar d-md-inline-flex d-flex flex-md-column justify-content-between sticky-md-top ">     
+        
+        <div class="d-md-inline-flex d-flex flex-md-column justify-content-between mt-2">
+          <div class="bg-white rounded-2 shadow d-md-inline-flex d-flex flex-md-column p-2 mb-4">
+            <a href="{{route('index')}}"><img class="icon" src="/img/logo.png" alt=""></a>
+          </div>
+
+        
+          
+          <div class="bg-white rounded-2 shadow d-md-inline-flex d-flex flex-md-column p-2 mb-4">
+            
+            <img class="icon mb-md-4 mb-0 add" src="/img/note.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+            <img class="icon mb-md-4 mb-0 add" src="/img/checklist.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+            <img class="icon add" src="/img/image.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+          </div>
+
+          <div class="bg-white rounded-2 shadow d-md-inline-flex d-flex flex-md-column p-2 mb-4">
+            
+            <img class="icon mb-md-4 mb-0" src="/img/tag.png" alt="">
+            <img class="icon mb-md-4 mb-0" src="/img/help.png" alt="">
+            <img class="icon" src="/img/help.png" alt="">
+          </div>
+
+        </div>
+
+        <div class="d-md-inline-flex d-flex flex-md-column justify-content-between">
+          <div class="bg-white rounded-2 shadow d-md-inline-flex d-flex flex-md-column p-2 mb-4" >
+            {{-- <img class="icon mb-md-4 mb-0" src="/img/help.png" alt=""> --}}
+            <img class="icon mb-md-4 mb-0" src="/img/settings.png" alt="">
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <a href="route('logout')"
+                      onclick="event.preventDefault();
+                                  this.closest('form').submit();">
+                  <img src="/img/logout.png" class="icon" alt="">
+              </a>
+            </form>
+          </div>
+
+          <div class="bg-white rounded-2 shadow d-md-inline-flex d-flex flex-md-column align-self-end p-2 mb-2">
+            <a href="{{route('index')}}"><img class="icon rounded-circle" src="/img/avatar.jpg" alt=""></a>
+          </div>
+        </div>
+        
+        </div>
+    </div>
+
+    <div class="col-md-11 col-12 mt-2"> 
+      <div class="row" id="FetchNotes" data-masonry='{"percentPosition": true }'>  
+
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card shadow edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body">
+              <h5 class="card-title">Заголовок...</h5>
+              <p class="card-text">Заметка...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card shadow edit_note" value="1000">
+            <img src="/img/notes-img.jpg" class="card-img" alt="...">
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card shadow edit_note" value="1000">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Checkbox
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Checkbox
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label checked" for="flexCheckChecked">
+                  Checked checkbox
+                </label> 
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {{-- Notes --}}
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- V3 -->
+
+
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-xl-1 col-2">  {{-- sticky-md-top fixed-top --}}
+      <div class="sidebar d-inline-flex d-flex flex-column justify-content-between sticky-top">     
+        
+        <div class="d-inline-flex d-flex flex-column justify-content-between mt-4">
+
+          <div class="1bg-white rounded-3 shadow d-inline-flex d-flex flex--column p-2 mb-4" style="background-color: #cecece;">
+            <a href="{{route('index')}}"><img class="icon" src="/img/logo.png" alt=""></a>
+          </div>
+
+
+
+          <div class="bg-white rounded-3 shadow d-inline-flex d-flex flex-column p-2 mb-4">
+            <img class="icon mb-4 add" src="/img/note.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+            <img class="icon mb-4 add" src="/img/checklist.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+            <img class="icon add" src="/img/image.png" alt="" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
+          </div>
+
+
+          <div class="bg-white rounded-3 shadow d-inline-flex d-flex flex-column p-2">
+            <img class="icon mb-4" src="/img/tag.png" alt="">
+            <img class="icon mb-4" src="/img/archive.png" alt="">
+            <img class="icon" src="/img/deleted.png" alt="">
+          </div>
+
+        </div>
+
+        <div class="d-inline-flex d-flex flex-column justify-content-between">
+          {{-- <div class="bg-white rounded-3 shadow d-inline-flex d-flex flex-column p-2 mb-4" >
+            <img class="icon mb-4" src="/img/help.png" alt="">
+            <img class="icon mb-4" src="/img/settings.png" alt="">
+            <form method="POST" action="{{ route('logout') }}">
+              @csrf
+              <a href="route('logout')"
+                      onclick="event.preventDefault();
+                                  this.closest('form').submit();">
+                  <img src="/img/logout.png" class="icon" alt="">
+              </a>
+            </form>
+          </div> --}}
+
+          <div class="bg-white rounded-3 shadow d-inline-flex d-flex flex-column p-2">
+            <a href="{{route('index')}}"><img class="icon rounded-circle" src="/img/avatar.jpg" alt=""></a>
+          </div>
+        </div>
+        
+        </div>
+    </div>
+
+    <div class="col-xl-11 col-10 mt-4"> 
+      <div id="success_message"></div>
+      <div class="row" id="FetchNotes" data-masonry='{"percentPosition": true }'>  
+
+        {{-- <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">                    
+          <div class="card rounded-3 shadow edit_note p-3" style="background-color: #ffffff;" value="10000">                      
+            
+              <div class="card rounded-3 edit_note mb-2" style="background-color: #baf7ff;" value="10000">
+                <div class="card-body">                       
+                  <h5 class="card-title">Прогрессивного развития</h5>  
+                </div>                      
+              </div>
+              <div class="card rounded-3 edit_note mb-2" style="background-color: #baf7ff;" value="10000">
+                <div class="card-body">                                            
+                  <p class="card-text">Разнообразный и богатый опыт дальнейшее развитие различных форм деятельности играет важную роль в формировании дальнейших направлений развития.</p>                      
+                </div>
+              </div> 
+
+              <div class="card rounded-3 edit_note mb-2" style="background-color: #baf7ff;" value="10000">
+                <div class="card-body">                                            
+                  <p class="card-text">С другой стороны консультация с широким активом способствует подготовки и реализации модели.</p>                      
+                </div>
+              </div> 
+
+              <div class="card rounded-3 edit_note" style="background-color: #baf7ff;" value="10000">
+                <div class="card-body">                                            
+                  <p class="card-text">Повседневная практика показывает.</p>                      
+                </div>
+              </div> 
+                               
+          </div>                  
+        </div> 
+        
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">                    
+          <div class="card rounded-3 shadow text-white edit_note" style="background-color: #38184b;" value="10000">                      
+            <div class="card-body">                        
+              <h5 class="card-title">Прогрессивного развития</h5>                        
+              <p class="card-text">Повседневная практика показывает, что сложившаяся структура организации в значительной степени обуславливает создание форм развития. Разнообразный и богатый опыт сложившаяся структура...</p>                      
+            </div>                    
+          </div>                  
+        </div>--}}
+
+        {{-- <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">                    
+          <div class="card rounded-3 shadow edit_note" style="background-color: #baf7ff;" value="10000">                      
+            <div class="card-body">                        
+              <h5 class="card-title">Прогрессивного развития</h5>                        
+              <p class="card-text">Повседневная практика показывает, что сложившаяся структура организации в значительной степени обуславливает создание форм развития. Разнообразный и богатый опыт сложившаяся структура...</p>                      
+            </div>                    
+          </div>                  
+        </div>
+
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">                    
+          <div class="card rounded-3 shadow edit_note" style="background-color: #baffdc;" value="10000">                      
+            <div class="card-body">                        
+              <h5 class="card-title">Прогрессивного развития</h5>                        
+              <p class="card-text">Повседневная практика показывает, что сложившаяся структура организации в значительной степени обуславливает создание форм развития. Разнообразный и богатый опыт сложившаяся структура...</p>                      
+            </div>                    
+          </div>                  
+        </div> --}}
+
+        {{-- <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card bg-white rounded-3 shadow text-white edit_note" value="1000">
+            <img src="/img/notes-img2.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div> --}}
+
+        {{-- <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card rounded-3 shadow edit_note" value="1000">
+            <img src="/img/notes-img.jpg" class="card-img" alt="...">
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card rounded-3 shadow edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body">
+              <h5 class="card-title">Заголовок...</h5>
+              <p class="card-text">Заметка...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card rounded-3 shadow edit_note" value="1000">
+            <img src="/img/notes-img2.jpg" class="card-img" alt="...">
+          </div>
+        </div>
+        
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card rounded-3 shadow edit_note" value="1000">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Checkbox
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Checkbox
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label checked" for="flexCheckChecked">
+                  Checked checkbox
+                </label> 
+              </li>
+            </ul>
+          </div>
+        </div> --}}
+
+        {{-- Notes --}}
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- V4 -->
+
+<nav class="navbar p-4 mb-4 bg-white shadow-sm">
+  
+  <div class="d-flex">
+      <a href="{{route('index')}}"><img class="icon" src="/img/logo.png" alt=""></a>
+  </div>
+  <div class="d-flex">
+      <div class="d-flex">
+      <img class="icon me-4" src="/img/help.png" alt="">
+      <img class="icon me-4" src="/img/settings.png" alt="">
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+  
+        <a href="route('logout')"
+                onclick="event.preventDefault();
+                            this.closest('form').submit();">
+            <img src="/img/logout.png" class="icon me-4" alt="">
+        </a>
+      </form>
+    </div>
+      <a href="{{route('index')}}"><img class="icon rounded-circle" src="/img/avatar.jpg" alt=""></a>
+  </div>
+ 
+</nav>
+
+
+
+    
+      <div id="success_message"></div>
+    <div class="container-fluid">
+      <div class="row" id="FetchNotes" data-masonry='{"percentPosition": true }'>  
+
+        {{-- <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">                    
+          <div class="card rounded-3 shadow-sm edit_note p-3" style="background-color: #ffffff;" value="10000">                      
+            
+              <div class="card rounded-3 edit_note mb-2" style="background-color: #baf7ff;" value="10000">
+                <div class="card-body">                       
+                  <h5 class="card-title">Прогрессивного развития</h5>  
+                </div>                      
+              </div>
+              <div class="card rounded-3 edit_note mb-2" style="background-color: #baf7ff;" value="10000">
+                <div class="card-body">                                            
+                  <p class="card-text">Разнообразный и богатый опыт дальнейшее развитие различных форм деятельности играет важную роль в формировании дальнейших направлений развития.</p>                      
+                </div>
+              </div> 
+
+              <div class="card rounded-3 edit_note mb-2" style="background-color: #baf7ff;" value="10000">
+                <div class="card-body">                                            
+                  <p class="card-text">С другой стороны консультация с широким активом способствует подготовки и реализации модели.</p>                      
+                </div>
+              </div> 
+
+              <div class="card rounded-3 edit_note" style="background-color: #baf7ff;" value="10000">
+                <div class="card-body">                                            
+                  <p class="card-text">Повседневная практика показывает.</p>                      
+                </div>
+              </div> 
+                               
+          </div>                  
+        </div> 
+        
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">                    
+          <div class="card rounded-3 shadow-sm text-white edit_note" style="background-color: #38184b;" value="10000">                      
+            <div class="card-body">                        
+              <h5 class="card-title">Прогрессивного развития</h5>                        
+              <p class="card-text">Повседневная практика показывает, что сложившаяся структура организации в значительной степени обуславливает создание форм развития. Разнообразный и богатый опыт сложившаяся структура...</p>                      
+            </div>                    
+          </div>                  
+        </div>--}}
+
+        {{-- <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">                    
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #baf7ff;" value="10000">                      
+            <div class="card-body">                        
+              <h5 class="card-title">Прогрессивного развития</h5>                        
+              <p class="card-text">Повседневная практика показывает, что сложившаяся структура организации в значительной степени обуславливает создание форм развития. Разнообразный и богатый опыт сложившаяся структура...</p>                      
+            </div>                    
+          </div>                  
+        </div>
+
+        <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">                    
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #baffdc;" value="10000">                      
+            <div class="card-body">                        
+              <h5 class="card-title">Прогрессивного развития</h5>                        
+              <p class="card-text">Повседневная практика показывает, что сложившаяся структура организации в значительной степени обуславливает создание форм развития. Разнообразный и богатый опыт сложившаяся структура...</p>                      
+            </div>                    
+          </div>                  
+        </div> --}}
+
+        {{-- <div class="col-xl-3 col-md-4 col-sm-6 col-12 mb-4">
+          <div class="card bg-white rounded-3 shadow-sm text-white edit_note" value="1000">
+            <img src="/img/notes-img2.jpg" class="card-img" alt="...">
+            <div class="card-img-overlay">
+              <h5 class="card-title">Card title</h5>
+              <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </div>
+          </div>
+        </div> --}}
+
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body"> 
+              <h5 class="card-title">Заголовок...</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Заголовок...</h6>
+              <p class="card-text">Заметка...</p>
+              <div class="card-tag mb-2 me-1" style="background-color: #dcd5ff; color: #503f8a;">Развитие</div>
+              <div class="card-tag mb-2 me-1" style="background-color: #ffcdb5; color: #865036;">Структура</div>
+              <div class="card-tag mb-2 me-1" style="background-color: #bbebff; color: #367285;">Степень</div>
+              <div class="card-tag mb-2 me-1" style="background-color: #ffc8c4; color: #8d4349;">Организация</div>
+              <div class="card-tag mb-2 me-1" style="background-color: #c8ffc9; color: #37853c;">Практика</div>
+              <div class="card-tag mb-2 me-1" style="background-color: #ffebc8; color: #8f7448;">Форма</div>
+              <div class="card-tag mb-2 me-1" style="background-color: #ffd2fe; color: #974892;">Опыт</div>
+              <div class="card-tag mb-2 me-1" style="background-color: #c8ffdf; color: #489267;">Усилиля</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" value="1000">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label checked" for="flexCheckChecked">
+                  Купить продукты
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Приготовить ужин
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Сделать уборку
+                </label> 
+              </li>
+              <div class="card-tag-list">
+                <div class="card-tag" style="background-color: #d3cbfd; color: #7a66bd;">Развитие</div>
+              </div>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <img src="/img/notes-img2.jpg" class="card-img-top" alt="...">
+            <div class="card-body"> 
+              <h5 class="card-title">Форма</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Форма развития</h6>
+              <p class="card-text">С другой стороны постоянный количественный рост и сфера нашей активности позволяет выполнять важные задания по разработке форм развития. Таким образом...</p>
+            </div>
+            <div class="card-tag-list">
+              <div class="card-tag" style="background-color: #ffcfb9; color: #cf8665;">Структура</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body"> 
+              <p class="card-text">С другой стороны постоянный количественный рост и сфера нашей активности позволяет выполнять важные задания по разработке форм развития. Таким образом...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" value="1000">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label checked" for="flexCheckChecked">
+                  Купить продукты
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Приготовить ужин
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Сделать уборку
+                </label> 
+              </li>
+              <div class="card-tag-list">
+                <div class="card-tag" style="background-color: #d3cbfd; color: #7a66bd;">Развитие</div>
+              </div>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body"> 
+              <h5 class="card-title">Форма</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Форма развития</h6>
+              <p class="card-text">С другой стороны постоянный количественный рост и сфера нашей активности позволяет выполнять важные задания по разработке форм развития. Таким образом...</p>
+            </div>
+            <div class="card-tag-list">
+              <div class="card-tag" style="background-color: #ffe5b9; color: #bb9860;">Форма</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body"> 
+              <h5 class="card-title">Пути развития</h5>
+              <p class="card-text">Идейные соображения высшего порядка, а также укрепление и развитие структуры влечет за собой процесс внедрения и модернизации направлений прогрессивного развития....</p>
+            </div>
+            <div class="card-tag-list">
+              <div class="card-tag" style="background-color: #d3cbfd; color: #7a66bd;">Развитие</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body"> 
+              <h5 class="card-title">Организация структуры</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Начало</h6>
+              <p class="card-text">Не следует, однако забывать, что сложившаяся структура организации представляет собой интересный эксперимент проверки модели развития. Значимость этих проблем настолько очевидна,...</p>
+            </div>
+            <div class="card-tag-list">
+              <div class="card-tag" style="background-color: #d3cbfd; color: #7a66bd;">Развитие</div>
+              <div class="card-tag" style="background-color: #ffcfb9; color: #cf8665;">Структура</div>
+              <div class="card-tag" style="background-color: #bcebff; color: #56abc8;">Степень</div>
+              <div class="card-tag" style="background-color: #f7bfbb; color: #b65b62;">Организация</div>
+              <div class="card-tag" style="background-color: #ffe5b9; color: #bb9860;">Форма</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <img src="/img/notes-img2.jpg" class="card-img" alt="...">
+            <div class="card-body"> 
+              <h5 class="card-title">Обучения кадров</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Подготовка</h6>
+              <p class="card-text">Равным образом рамки и место обучения кадров способствует подготовки и реализации позиций, занимаемых участниками в отношении поставленных задач. Разнообразный и...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body"> 
+              <h5 class="card-title">Заголовок...</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Заголовок...</h6>
+              <p class="card-text">Заметка...</p>
+            </div>
+            <div class="card-tag-list">
+              <div class="card-tag" style="background-color: #b9f1bb; color: #5eb364;">Практика</div>
+              <div class="card-tag" style="background-color: #f1bff0; color: #9f4e9a;">Опыт</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" value="1000">
+            <img src="/img/notes-img.jpg" class="card-img" alt="...">
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" style="background-color: #ffffff;" value="100">
+            <div class="card-body">
+              <h5 class="card-title">Заголовок...</h5>
+              <p class="card-text">Заметка...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" value="1000">
+            <img src="/img/notes-img4.jpg" class="card-img" alt="...">
+          </div>
+        </div>
+        
+        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+          <div class="card rounded-3 shadow-sm edit_note" value="1000">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Checkbox
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
+                <label class="form-check-label" for="flexCheckChecked">
+                  Checkbox
+                </label>
+              </li>
+              <li class="list-group-item">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label checked" for="flexCheckChecked">
+                  Checked checkbox
+                </label> 
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        {{-- Notes --}}
+
+      </div>
+    </div>
