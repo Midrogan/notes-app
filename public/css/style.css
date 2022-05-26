@@ -6,10 +6,9 @@
 	width: 9px;
   }
   
-  ::-webkit-scrollbar-track {
+  /* ::-webkit-scrollbar-track {
 	
-	/* background: #eeeeee; */
-  }
+  } */
   
   ::-webkit-scrollbar-thumb {
 	background: #212529;
