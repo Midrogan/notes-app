@@ -70,7 +70,8 @@ body {
 }
 
 .dropdown-item:active {
-    background-color: #212529;
+    background-color: #E9ECEF;
+    color: #212529;
 }
 
 .dropdown-item-center{
@@ -175,7 +176,7 @@ body {
 
 .text-muted {
     /* color: #6c757d; */
-    color: #b9bec7;
+    color: #32373d;
 }
 
 .title.form-control-plaintext{
@@ -220,7 +221,7 @@ body {
     color: #212529;
     background-color: transparent;
     padding: 2px 14px;
-    margin: 8px 0 0 0;
+    margin: 8px 8px 0 0;
     font-size: 0.8rem;
     border-radius: 1rem;
 }

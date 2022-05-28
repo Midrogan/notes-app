@@ -4,9 +4,10 @@
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="container d-flex justify-content-between align-items-center" style="max-width: 1160px;">
 
-      <div class="bg-dark shadow-sm rounded-3 p-2">
+      {{-- <div class="bg-dark shadow-sm rounded-3 p-2">
         <a href="{{route('index')}}"><img class="icon" src="/img/logo.png" alt=""></a>
-      </div>
+      </div> --}}
+      <a href="{{route('index')}}"><img class="icon" src="/img/blogo.png" alt=""></a>
 
       <div>
         @if (Route::has('login'))
@@ -84,7 +85,7 @@
               <div class="card-body"> 
                 <h5 class="card-title">Храните идеи</h5>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
-                <p class="card-text">Создавайте заметки. Ведение заметок заставляет гораздо внимательнее смотреть на окружающий мир.</p>
+                <p class="card-text">Ведение заметок заставляет гораздо внимательнее смотреть на окружающий мир.</p>
               </div>
               <div class="card-tag-list border-top">
                 <div class="card-tag tag-blue shadow-sm">Возможности</div>
@@ -95,9 +96,9 @@
           <div class="col-sm-6 col-12 mb-4">
             <div class="card rounded-3 shadow-sm">
               <div class="card-body"> 
-                <h5 class="card-title">Пусть список дел станет списком сделанного</h5>
+                <h5 class="card-title">Составляйте списки</h5>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
-                <p class="card-text">Используйте списки. Список дел - это всего лишь перечисление того, чем вам нужно заняться.</p>
+                <p class="card-text">Пусть список дел станет списком сделанного.</p>
               </div>
               <div class="card-tag-list border-top">
                 <div class="card-tag tag-pink shadow-sm">Возможности</div>

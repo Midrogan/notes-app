@@ -74,7 +74,7 @@
       <div id="success_message"></div>
       <div class="row" id="FetchNotes" data-masonry='{"percentPosition": true }'>  
 
-        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+        {{--<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
           <div class="card rounded-3 shadow-sm edit_note" value="100">
             <div class="card-body"> 
               <h5 class="card-title">Заголовок...</h5>
@@ -96,7 +96,7 @@
             </div>
           </div>
         </div>
-
+ 
         <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
           <div class="card rounded-3 shadow-sm edit_note" value="100">
             <div class="card-body"> 
@@ -265,7 +265,7 @@
             <div class="card-tag-list border-top">
             </div>
           </div>
-        </div>
+        </div> --}}
 
         {{-- Notes --}}
 
@@ -277,7 +277,7 @@
 
   {{-- EditNoteModal --}}
   <div class="modal fade" id="EditNoteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-md modal-dialog-scrollable">
+    <div class="modal-dialog modal-md 1modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-body">
           <ul id="updateform_errList"></ul>
@@ -294,7 +294,7 @@
                 <img class="icon me-3" src="/img/tag.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить категорию">
               </a>
               <ul class="dropdown-menu text-small shadow" id="EditNoteFetchTags" aria-labelledby="dropdownEditNoteSelectTag" style="">
-                Пусто
+                
               </ul>
             </div>
             <img class="icon me-3" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">       
@@ -312,7 +312,7 @@
   
   {{-- AddNoteModal --}}
   <div class="modal fade" id="AddNoteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-md modal-dialog-scrollable">
+      <div class="modal-dialog modal-md 1modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-body">
             <ul id="saveform_errList"></ul>
@@ -329,7 +329,7 @@
                   <img class="icon me-3" src="/img/tag.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить категорию">
                 </a>
                 <ul class="dropdown-menu text-small shadow" id="AddNoteFetchTags" aria-labelledby="dropdownAddNoteSelectTag" style="">
-                    Пусто
+                    
                 </ul>
               </div>
               <img class="icon" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
@@ -452,24 +452,33 @@
             data: "json",
             success: function (response) {
               console.log(response);
-             
-                $.each(response.notes, function (key, item) { 
-                
+
+              $.each(response.notes, function (key, item) { 
+                  let tagsDivs = '';
+                  const renderTags = (tags) => {
+                    tags.forEach((tag) => {
+                      tagsDivs += `<div class="card-tag ${tag.tags_type.type} shadow-sm">${tag.name}</div>`;
+                    });
+                  };
+                  renderTags(item.tags);
+                                 
                    $('#FetchNotes').append(
-                    '<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">\
-                      <div class="card rounded-3 shadow-sm restore" value="'+item.id+'">\
-                        <div class="card-body">\
-                          <h5 class="card-title">'+item.title+'</h5>\
-                          <h6 class="card-subtitle mb-2 text-muted">'+item.subtitle+'</h6>\
-                          <p class="card-text">'+item.content+'</p>\
-                        </div>\
-                        <div class="card-tag-list border-top">\
-                        </div>\
-                      </div>\
-                    </div>'
+                    `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+                      <div class="card rounded-3 shadow-sm" value="${item.id}">
+                        <div class="card-body">
+                          <h5 class="card-title">${item.title}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">${item.subtitle}</h6>
+                          <p class="card-text">${item.content}</p>
+                        </div>
+                        <div class="card-tag-list border-top">
+                          ${tagsDivs}
+                        </div>
+                      </div>
+                    </div>`
                    );
 
                 });
+             
             }
           });
 
@@ -483,24 +492,33 @@
             data: "json",
             success: function (response) {
               console.log(response);
-             
+
                 $.each(response.notes, function (key, item) { 
-                
+                  let tagsDivs = '';
+                  const renderTags = (tags) => {
+                    tags.forEach((tag) => {
+                      tagsDivs += `<div class="card-tag ${tag.tags_type.type} shadow-sm">${tag.name}</div>`;
+                    });
+                  };
+                  renderTags(item.tags);
+                                 
                    $('#FetchNotes').append(
-                    '<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">\
-                      <div class="card rounded-3 shadow-sm edit_note" value="'+item.id+'">\
-                        <div class="card-body">\
-                          <h5 class="card-title">'+item.title+'</h5>\
-                          <h6 class="card-subtitle mb-2 text-muted">'+item.subtitle+'</h6>\
-                          <p class="card-text">'+item.content+'</p>\
-                        </div>\
-                        <div class="card-tag-list border-top">\
-                        </div>\
-                      </div>\
-                    </div>'
+                    `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+                      <div class="card rounded-3 shadow-sm edit_note" value="${item.id}">
+                        <div class="card-body">
+                          <h5 class="card-title">${item.title}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">${item.subtitle}</h6>
+                          <p class="card-text">${item.content}</p>
+                        </div>
+                        <div class="card-tag-list border-top">
+                          ${tagsDivs}
+                        </div>
+                      </div>
+                    </div>`
                    );
 
                 });
+
             }
           });
 
@@ -549,11 +567,17 @@
             $(".update_note").prop('disabled', true);
             
             var id = $('#edit_note_id').attr('value');
-      
+
+            var tags = [];
+            $('#EditNoteFetchTags input:checkbox:checked').each(function() {
+              tags.push($(this).val());
+            });
+
             var data = {
                 'title': $('#edit_note_title').text(), 
                 'subtitle': $('#edit_note_subtitle').text(), 
                 'content': $('#edit_note_content').text(),
+                'tags' : tags,
             }
 
             $.ajaxSetup({
@@ -602,7 +626,6 @@
 
         $(document).on('click', '.edit_note', function (e) {
             e.preventDefault();
-            
 
             var id = $(this).attr('value');
 
@@ -610,6 +633,7 @@
                 type: "GET",
                 url: "/edit-note/"+id,
                 success: function (response) {
+                  console.log(response);
                   if (response.status == 404) 
                   {
                     $('#success_message').html("");
@@ -626,6 +650,27 @@
                     $('#edit_note_title').html(response.note.title);
                     $('#edit_note_subtitle').html(response.note.subtitle);
                     $("#edit_note_content").html(response.note.content)
+                    $('#EditNoteFetchTags').html("");
+                    EditNotefetchAllTags();
+
+                    $( document ).ajaxComplete(function() {
+                      $('#EditNoteFetchTags input:checkbox').each(function() {
+                      $(this).prop('checked', false);
+                        var check = '';
+                        var id = $(this).val();
+                        var check = $(this);
+                        // console.log('input' + $(this).val());
+                        $.each(response.note.tags, function (key, item) {
+                          // console.log('item' + item.id);
+                          if (id == item.id) { 
+                            $(check).prop('checked', true);
+                            // console.log(check);
+                          }
+
+                        });
+                      });
+                    });
+                    
                     $(".update_note").prop('disabled', false);
                     $(".delete_note").prop('disabled', false);
                   }
@@ -637,12 +682,19 @@
             e.preventDefault();
             $(".add_note").prop('disabled', true);
 
+            var tags = [];
+            $('#AddNoteFetchTags input:checkbox:checked').each(function() {
+              tags.push($(this).val());
+            });
+
             var data = {
                 'title': $('#add_note_title').text(), 
                 'subtitle': $('#add_note_subtitle').text(),
                 'content': $("#add_note_content").text(),
+                'tags' : tags
             }
 
+            console.log(data);
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -681,11 +733,14 @@
 
         $(document).on('click', '.add', function (e) {
         e.preventDefault();
+
           $('#saveform_errList').html("");
           $('#saveform_errList').removeClass();
           $('#add_note_title').html("");
           $('#add_note_subtitle').html("");
           $("#add_note_content").html("");
+          $('#AddNoteFetchTags').html("");
+          AddNotefetchAllTags();
           $(".add_note").prop('disabled', false); 
         });
 
@@ -705,7 +760,7 @@
                 $.each(response.tags, function (key, item) { 
                 
                    $('#FetchTags').append(
-                    '<li class="dropdown-item align-items-center justify-content-between border-top notes">\
+                    '<li class="dropdown-item align-items-center justify-content-between border-top">\
                       <div class="rounded-circle tag-circle shadow-sm me-2 '+item.type+'"></div>\
                       <div class="dropdown-tag-text">'+item.name+'</div>\
                       <img class="icon-sm ms-2 edit_tag" value="'+item.id+'" src="/img/edit.png" alt="" data-bs-toggle="tooltip" data-bs-placement="right" title="Изменить">\
@@ -718,28 +773,47 @@
 
         }
 
-        function fetchAllTagsToSelect() 
+        function AddNotefetchAllTags() 
         {
           $.ajax({
             type: "GET",
-            url: "/fetch-tags-types",
+            url: "/fetch-all-tags",
             data: "json",
             success: function (response) {
-              console.log(response);
              
-                $.each(fetch-all-tags, function (key, item) { 
-                
-                   $('#AddFetchTags').append(
-                    '<li><a class="dropdown-item add_select_tags_types" value="'+item.id+'" type="'+item.type+'">\
-                      <div class="card-tag shadow-sm '+item.type+'">Категория</div>\
-                      </a></li>'
-                   );
+                $.each(response.tags, function (key, item) {                
 
-                   $('#EditFetchTags').append(
-                    '<li><a class="dropdown-item edit_select_tags_types" value="'+item.id+'" type="'+item.type+'">\
-                      <div class="card-tag shadow-sm '+item.type+'">Категория</div>\
-                      </a></li>'
-                   );
+                  $('#AddNoteFetchTags').append(
+                    `<li class="dropdown-item align-items-center justify-content-between">
+                      <div class="rounded-circle tag-circle shadow-sm me-2 ${item.type}"></div>
+                      <div class="dropdown-tag-text">${item.name}</div>
+                      <input class="form-check-input ms-2 mt-0" type="checkbox" value="${item.id}">
+                    </li>`
+                   );              
+
+                });
+            }
+          });
+
+        }
+
+        function EditNotefetchAllTags() 
+        {
+          $.ajax({
+            type: "GET",
+            url: "/fetch-all-tags",
+            data: "json",
+            success: function (response) {
+
+                $.each(response.tags, function (key, item) {                
+
+                  $('#EditNoteFetchTags').append(
+                    `<li class="dropdown-item align-items-center justify-content-between">
+                      <div class="rounded-circle tag-circle shadow-sm me-2 ${item.type}"></div>
+                      <div class="dropdown-tag-text">${item.name}</div>
+                      <input class="form-check-input ms-2 mt-0" type="checkbox" value="${item.id}">
+                    </li>`
+                  );                
 
                 });
             }
@@ -817,6 +891,8 @@
                   $('#success_message').addClass('alert alert-success');
                   $('#success_message').text(response.message);
                   $('#EditTagModal').modal('hide');
+                  $('#FetchNotes').html("");
+                  fetchAllNotes();
                   $('#FetchTags').html("");
                   fetchAllTags();
                   setTimeout(closeSuccess, 3000);
@@ -870,6 +946,8 @@
                     $('#success_message').addClass('alert alert-success');
                     $('#success_message').text(response.message);
                     $('#EditTagModal').modal('hide');
+                    $('#FetchNotes').html("");
+                    fetchAllNotes();
                     $('#FetchTags').html("");
                     fetchAllTags();
                     setTimeout(closeSuccess, 3000);
@@ -903,6 +981,7 @@
                     $('#updateform_errList').removeClass();
                     $('#EditTagModal').modal('show');
                     $('#edit_tag_id').val(response.tag.id);
+                    $('#edit_tag_type').val(response.type.id);
                     $('#edit_tag_name').html(response.tag.name);
                     $('#edit_tag_circle').removeClass();
                     $('#edit_tag_circle').addClass('rounded-circle tag-circle shadow-sm ' + response.type.type);
@@ -1008,3 +1087,25 @@
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#AddNoteModal">
               Add
             </button> --}}
+
+
+            {{-- //     $.each(response.notes, function (key, item) { 
+                
+              //     $('#FetchNotes').append(
+              //      '<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">\
+              //        <div class="card rounded-3 shadow-sm edit_note" value="'+item.id+'">\
+              //          <div class="card-body">\
+              //            <h5 class="card-title">'+item.title+'</h5>\
+              //            <h6 class="card-subtitle mb-2 text-muted">'+item.subtitle+'</h6>\
+              //            <p class="card-text">'+item.content+'</p>\
+              //          </div>\
+              //          <div class="card-tag-list border-top">\
+              //            '+$.each(response.notes, function (key, item) {+'\
+              //                <div class="card-tag tag-red shadow-sm">123</div>\
+              //            '+});+'\
+              //          </div>\
+              //        </div>\
+              //      </div>'
+              //     );
+  
+              //  }); --}}

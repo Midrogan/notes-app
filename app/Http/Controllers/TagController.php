@@ -18,7 +18,7 @@ class TagController extends Controller
         ->select('tags.id', 'tags.name', 'tags_types.type')
         ->where('author', Auth::user()->name)
         ->orderBy('created_at', 'desc')
-        ->get();
+        ->get();     
 
         return response()->json([
             'tags' => $tags

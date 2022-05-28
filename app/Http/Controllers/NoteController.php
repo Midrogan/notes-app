@@ -22,7 +22,18 @@ class NoteController extends Controller
 
     public function fetchAll()
     {
-        $notes = Note::shortNote(Note::where('author', Auth::user()->name)->orderBy('created_at', 'desc')->get());
+        // $notes = Note::shortNote(
+        //     Note::where('author', Auth::user()->name)->orderBy('created_at', 'desc')
+        //     ->with('tags')
+        //     ->get()
+        // );
+
+        $notes = Note::shortNote(
+            Note::where('author', Auth::user()->name)->orderBy('created_at', 'desc')
+            ->with('tags.tagsType')
+            ->get()
+        );
+
 
         return response()->json([
             'notes' => $notes
@@ -31,7 +42,13 @@ class NoteController extends Controller
 
     public function fetchDeleted()
     {
-        $notes = Note::shortNote(Note::where('author', Auth::user()->name)->onlyTrashed()->get());
+        // $notes = Note::shortNote(Note::where('author', Auth::user()->name)->onlyTrashed()->get());
+
+        $notes = Note::shortNote(
+            Note::where('author', Auth::user()->name)->onlyTrashed()->orderBy('deleted_at', 'desc')
+            ->with('tags.tagsType')
+            ->get()
+        );
 
         return response()->json([
             'notes' => $notes
@@ -61,8 +78,8 @@ class NoteController extends Controller
             $note->author = Auth::user()->name;
             $note->save();
 
-            // $note = Note::find($note->id);
-            // $note->tags()->attach([3, 5, 6]);
+            $note = Note::find($note->id);
+            $note->tags()->attach($request->input('tags'));
 
             return response()->json([
                 'status' => 200,
@@ -76,6 +93,7 @@ class NoteController extends Controller
         $note = Note::find($id);
         if($note)
         {
+            $note->tags;
             return response()->json([
                 'status' => 200,
                 'note' => $note,
@@ -114,6 +132,11 @@ class NoteController extends Controller
                 $note->subtitle = htmlspecialchars($request->input('subtitle'));
                 $note->content = htmlspecialchars($request->input('content'));
                 $note->update();
+
+                
+                $note->tags()->detach($note->tags);
+                $note->tags()->attach($request->input('tags'));
+
                 
                 return response()->json([
                     'status' => 200,
