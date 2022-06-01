@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Tag;
+use App\Models\Note;
 use App\Models\TagsType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,20 @@ class TagController extends Controller
 
         return response()->json([
             'tags' => $tags
+        ]);
+    }
+
+    public function fetchNotesByTag($id)
+    {
+        $notes = Note::shortNote(
+            Tag::find($id)
+            ->notes()
+            ->with('tags.tagsType')
+            ->get()
+        );
+
+        return response()->json([
+            'notes' => $notes
         ]);
     }
 

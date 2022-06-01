@@ -20,6 +20,7 @@ Route::get('/', [NoteController::class, 'index'])->name('index');
 Route::middleware('auth')->group(function () {
     Route::get('/notes', [NoteController::class, 'notes'])->name('notes');
     Route::get('/fetch-all-notes', [NoteController::class, 'fetchAll']);
+    // Route::get('/fetch-by-tag-notes/{id}', [NoteController::class, 'fetchByTag']);
     Route::get('/fetch-deleted-notes', [NoteController::class, 'fetchDeleted']);
     Route::post('/add-note', [NoteController::class, 'store']);
     Route::get('/edit-note/{id}', [NoteController::class, 'edit']);
@@ -27,15 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/delete-note/{id}', [NoteController::class, 'destroy']);
 
     Route::get('/fetch-all-tags', [TagController::class, 'fetchAll']);
+    Route::get('/fetch-notes-by-tag/{id}', [TagController::class, 'fetchNotesByTag']);
+    Route::get('/fetch-tags-types', [TagController::class, 'fetchTagsTypes']);
     Route::post('/add-tag', [TagController::class, 'store']);
     Route::get('/edit-tag/{id}', [TagController::class, 'edit']);
     Route::put('/update-tag/{id}', [TagController::class, 'update']);
     Route::delete('/delete-tag/{id}', [TagController::class, 'destroy']);
-
-    Route::get('/fetch-tags-types', [TagController::class, 'fetchTagsTypes']);
 });
 
 require __DIR__.'/auth.php';
-
-
-// Route::get('/notes', [NoteController::class, 'allNote'])->name('allNote');

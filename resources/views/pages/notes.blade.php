@@ -21,7 +21,7 @@
                 </a>
                 <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownAdd" style="">
                   <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#AddNoteModal">Заметка</a></li>
-                  <li><a class="dropdown-item border-top" data-bs-toggle="modal" data-bs-target="#AddNoteModal">Список</a></li>
+                  <li><a class="dropdown-item border-top" data-bs-toggle="modal" data-bs-target="#AddListModal">Список</a></li>
                 </ul>
               </div>
             </div>
@@ -74,7 +74,7 @@
       <div id="success_message"></div>
       <div class="row" id="FetchNotes" data-masonry='{"percentPosition": true }'>  
 
-        {{--<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+        {{-- <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
           <div class="card rounded-3 shadow-sm edit_note" value="100">
             <div class="card-body"> 
               <h5 class="card-title">Заголовок...</h5>
@@ -145,8 +145,8 @@
             <img src="/img/notes-img3.jpg" class="card-img shadow-sm" alt="...">
             <div class="card-body"> 
               <h5 class="card-title">Форма</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Форма развития</h6>
-              <p class="card-text">С другой стороны постоянный количественный рост и сфера нашей активности позволяет выполнять важные задания по разработке форм развития. Таким образом...</p>
+              <h6 class="card-subtitle mb-2 text-muted">Практика</h6>
+              <p class="card-text">Повседневная практика показывает, что укрепление и развитие структуры требуют от нас анализа новых предложений. Таким...</p>
             </div>
             <div class="card-tag-list border-top">
               <div class="card-tag tag-pink shadow-sm">Практика</div>
@@ -156,29 +156,30 @@
 
         <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
           <div class="card rounded-3 shadow-sm edit_note" value="1000">
-            <img src="/img/notes-img.jpg" class="card-img shadow-sm" alt="...">
+            <img src="/img/notes-img6.jpg" class="card-img shadow-sm" alt="...">
             <ul class="list-group list-group-flush">
+              <li class="list-group-title"><h5>Список покупок</h5></li>
               <li class="list-group-item">
                 <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
                 <label class="form-check-label checked" for="flexCheckChecked">
-                  Купить продукты
+                  600 гр говядины
                 </label>
               </li>
               <li class="list-group-item">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                <label class="form-check-label" for="flexCheckChecked">
-                  Приготовить ужин
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label checked" for="flexCheckChecked">
+                  Лук, морковь, картофель, томаты, перец
                 </label>
               </li>
               <li class="list-group-item">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                <label class="form-check-label" for="flexCheckChecked">
-                  Сделать уборку
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label checked" for="flexCheckChecked">
+                  Специи
                 </label> 
               </li>
             </ul>
             <div class="card-tag-list border-top">
-              <div class="card-tag tag-blue shadow-sm">Опыт</div>
+              <div class="card-tag tag-light-green shadow-sm">Продукты</div>
             </div>
           </div>
         </div>
@@ -238,34 +239,7 @@
               <div class="card-tag tag-green shadow-sm">Усилиля</div>
             </div>
           </div>
-        </div>
-        
-        <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
-          <div class="card rounded-3 shadow-sm edit_note" value="1000">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                <label class="form-check-label" for="flexCheckChecked">
-                  Не выполнено
-                </label>
-              </li>
-              <li class="list-group-item">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                <label class="form-check-label" for="flexCheckChecked">
-                  Не выполнено
-                </label>
-              </li>
-              <li class="list-group-item">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label checked" for="flexCheckChecked">
-                  Выполнено
-                </label> 
-              </li>
-            </ul>
-            <div class="card-tag-list border-top">
-            </div>
-          </div>
-        </div> --}}
+        </div>  --}}
 
         {{-- Notes --}}
 
@@ -274,6 +248,74 @@
 
   </div>
 </div>
+
+  {{-- EditListModal --}}
+  <div class="modal fade" id="EditListModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md 1modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-body">
+          <input type="hidden" id="edit_list_id">
+          <h5><div id="edit_list_title" class="title form-control-plaintext" contenteditable="true" data-placeholder="Заголовок" type="text"></div></h5>
+          <h6><div id="edit_list_subtitle" class="subtitle text-muted form-control-plaintext" contenteditable="true" data-placeholder="Подзаголовок..." type="text"></div></h6>
+          <div id="edit_list_content" class="content form-control-plaintext" contenteditable="true" data-placeholder="Заметка..." type="text"></div>   
+        </div>
+        <div class="modal-footer d-flex justify-content-between border-top">
+          <div class="d-flex">
+            <img class="icon me-3" src="/img/img.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить фото">
+            <div class="dropdown">
+              <a class="d-flex align-items-center justify-content-center" id="dropdownEditListSelectTag" data-bs-toggle="dropdown" aria-expanded="false">
+                <img class="icon me-3" src="/img/tag.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить категорию">
+              </a>
+              <ul class="dropdown-menu text-small shadow" id="EditListFetchTags" aria-labelledby="dropdownEditListSelectTag" style="">
+                
+              </ul>
+            </div>
+            <img class="icon me-3" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">       
+            <img class="icon delete_list" src="/img/delete.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Удалить заметку">
+          </div>
+          <div class="d-flex">
+            <button type="button" class="btn btn-sm btn-dark me-3 update_list">Обновить</button>
+            <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{-- End- EditListModal --}}
+  
+  {{-- AddListModal --}}
+  <div class="modal fade" id="AddListModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-md 1modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-body">
+            <h5><div id="add_list_title" class="title form-control-plaintext" contenteditable="true" data-placeholder="Заголовок..." type="text"></div></h5> 
+            <h6><div id="add_list_subtitle" class="subtitle text-muted form-control-plaintext" contenteditable="true" data-placeholder="Подзаголовок..." type="text"></div></h6>     
+            <div id="add_list_content" class="content form-control-plaintext" contenteditable="true" data-placeholder="Заметка..." type="text"></div>  
+          </div>
+          <div class="modal-footer d-flex justify-content-between border-top">
+            <div class="d-flex">
+              <img class="icon me-3" src="/img/img.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить фото">
+              <div class="dropdown">
+                <a class="d-flex align-items-center justify-content-center" id="dropdownAddListSelectTag" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img class="icon me-3" src="/img/tag.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить категорию">
+                </a>
+                <ul class="dropdown-menu text-small shadow" id="AddListFetchTags" aria-labelledby="dropdownAddListSelectTag" style="">
+                    
+                </ul>
+              </div>
+              <img class="icon" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
+            </div>
+            <div class="d-flex">
+              
+              <button type="button" class="btn btn-sm btn-dark me-3 add_list">Сохранить</button>
+              <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Закрыть</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  {{-- End- AddListModal --}}
 
   {{-- EditNoteModal --}}
   <div class="modal fade" id="EditNoteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -536,6 +578,15 @@
           fetchDeletedNotes();
         });
 
+        $(document).on('click', '.notes_by_tag', function (e) {
+        e.preventDefault();
+
+        var id = $(this).attr('value');
+
+        $('#FetchNotes').html("");
+          fetchNotesByTag(id);
+        });
+
         $(document).on('click', '.delete_note', function (e) {
           e.preventDefault();
           $(".delete_note").prop('disabled', true);
@@ -760,7 +811,7 @@
                 $.each(response.tags, function (key, item) { 
                 
                    $('#FetchTags').append(
-                    '<li class="dropdown-item align-items-center justify-content-between border-top">\
+                    '<li class="dropdown-item align-items-center justify-content-between border-top notes_by_tag" value="'+item.id+'">\
                       <div class="rounded-circle tag-circle shadow-sm me-2 '+item.type+'"></div>\
                       <div class="dropdown-tag-text">'+item.name+'</div>\
                       <img class="icon-sm ms-2 edit_tag" value="'+item.id+'" src="/img/edit.png" alt="" data-bs-toggle="tooltip" data-bs-placement="right" title="Изменить">\
@@ -768,6 +819,46 @@
                    );
 
                 });
+            }
+          });
+
+        }
+
+        function fetchNotesByTag(id) 
+        {
+          $.ajax({
+            type: "GET",
+            url: "/fetch-notes-by-tag/"+id,
+            data: "json",
+            success: function (response) {
+              console.log(response);
+
+                $.each(response.notes, function (key, item) { 
+                  let tagsDivs = '';
+                  const renderTags = (tags) => {
+                    tags.forEach((tag) => {
+                      tagsDivs += `<div class="card-tag ${tag.tags_type.type} shadow-sm">${tag.name}</div>`;
+                    });
+                  };
+                  renderTags(item.tags);
+                                 
+                   $('#FetchNotes').append(
+                    `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+                      <div class="card rounded-3 shadow-sm edit_note" value="${item.id}">
+                        <div class="card-body">
+                          <h5 class="card-title">${item.title}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">${item.subtitle}</h6>
+                          <p class="card-text">${item.content}</p>
+                        </div>
+                        <div class="card-tag-list border-top">
+                          ${tagsDivs}
+                        </div>
+                      </div>
+                    </div>`
+                   );
+
+                });
+
             }
           });
 
@@ -784,8 +875,8 @@
                 $.each(response.tags, function (key, item) {                
 
                   $('#AddNoteFetchTags').append(
-                    `<li class="dropdown-item align-items-center justify-content-between">
-                      <div class="rounded-circle tag-circle shadow-sm me-2 ${item.type}"></div>
+                    `<li class="dropdown-item align-items-center justify-content-between unclickable">
+                      <div class="rounded-circle tag-circle shadow-sm me-2 ${item.type} unclickable"></div>
                       <div class="dropdown-tag-text">${item.name}</div>
                       <input class="form-check-input ms-2 mt-0" type="checkbox" value="${item.id}">
                     </li>`
@@ -1045,6 +1136,10 @@
           $('#add_tag_name').html("");
           $(".add_tag").prop('disabled', false); 
         });
+
+
+
+
 
       });
 

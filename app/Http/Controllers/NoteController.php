@@ -40,6 +40,20 @@ class NoteController extends Controller
         ]);
     }
 
+    // public function fetchByTag($id)
+    // {
+    //     $notes = Note::shortNote(
+    //         Note::where('author', Auth::user()->name)->orderBy('created_at', 'desc')
+    //         ->with('tags')
+    //         ->get()
+    //     );
+
+
+    //     return response()->json([
+    //         'notes' => $notes
+    //     ]);
+    // }
+
     public function fetchDeleted()
     {
         // $notes = Note::shortNote(Note::where('author', Auth::user()->name)->onlyTrashed()->get());

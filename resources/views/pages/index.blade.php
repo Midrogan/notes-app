@@ -11,14 +11,14 @@
 
       <div>
         @if (Route::has('login'))
-          {{-- @auth
-            <a href="{{ url('/notes') }}" type="button" class="btn btn-dark shadow-sm">{{ Auth::user()->name }}</a>
-          @else --}}
+          @auth
+            <a href="{{ url('/notes') }}" type="button" class="btn btn-sm btn-dark shadow-sm">Личный кабинет</a>
+          @else
             @if (Route::has('register'))
               <a href="{{ route('register') }}" type="button" style="background-color: rgb(255, 255, 255)" class="btn btn-sm btn-light shadow-sm me-2">Регистрация</a>
             @endif
             <a href="{{ route('login') }}" type="button" class="btn btn-sm btn-dark shadow-sm">Войти</a>
-          {{-- @endauth --}}
+          @endauth
         @endif
       </div>
     </div>
@@ -81,79 +81,79 @@
         <div class="row" data-masonry='{"percentPosition": true }'>
 
           <div class="col-sm-6 col-12 mb-4">
-            <div class="card rounded-3 shadow-sm">
+            <div class="card rounded-3 shadow-sm unclickable">
               <div class="card-body"> 
                 <h5 class="card-title">Храните идеи</h5>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text">Ведение заметок заставляет гораздо внимательнее смотреть на окружающий мир.</p>
               </div>
               <div class="card-tag-list border-top">
-                <div class="card-tag tag-blue shadow-sm">Возможности</div>
+                <div class="card-tag tag-blue shadow-sm unclickable">Возможности</div>
               </div>
             </div>
           </div>
 
           <div class="col-sm-6 col-12 mb-4">
-            <div class="card rounded-3 shadow-sm">
+            <div class="card rounded-3 shadow-sm unclickable">
               <div class="card-body"> 
                 <h5 class="card-title">Составляйте списки</h5>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text">Пусть список дел станет списком сделанного.</p>
               </div>
               <div class="card-tag-list border-top">
-                <div class="card-tag tag-pink shadow-sm">Возможности</div>
+                <div class="card-tag tag-pink shadow-sm unclickable">Возможности</div>
               </div>
             </div>
           </div>
 
           <div class="col-sm-6 col-12 mb-4">
-            <div class="card rounded-3 shadow-sm">
+            <div class="card rounded-3 shadow-sm unclickable">
               <div class="card-body"> 
                 <h5 class="card-title">Пусть от заметок будет больше толка</h5>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text">Добавляйте изображение к своим заметкам и спискам.</p>
               </div>
               <div class="card-tag-list border-top">
-                <div class="card-tag tag-light-green shadow-sm">Возможности</div>
+                <div class="card-tag tag-light-green shadow-sm unclickable">Возможности</div>
               </div>
             </div>
           </div>
 
           <div class="col-sm-6 col-12 mb-4">
-            <div class="card rounded-3 shadow-sm">
+            <div class="card rounded-3 shadow-sm unclickable">
               <div class="card-body"> 
                 <h5 class="card-title">Заметкам и спискам необходима связь</h5>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text">Создавайте свои собственные категории необходимого цвета и группируйте идеи.</p>
               </div>
               <div class="card-tag-list border-top">
-                <div class="card-tag tag-turquoise shadow-sm">Возможности</div>
+                <div class="card-tag tag-turquoise shadow-sm unclickable">Возможности</div>
               </div>
             </div>
           </div>
 
           <div class="col-sm-6 col-12 mb-4">
-            <div class="card rounded-3 shadow-sm">
+            <div class="card rounded-3 shadow-sm unclickable">
               <div class="card-body"> 
                 <h5 class="card-title">Ничего не теряйте</h5>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text">Архивируйте свои заметки и списки чтобы затем к ним вернуться.</p>
               </div>
               <div class="card-tag-list border-top">
-                <div class="card-tag tag-orange shadow-sm">Возможности</div>
+                <div class="card-tag tag-orange shadow-sm unclickable">Возможности</div>
               </div>
             </div>
           </div>
 
           <div class="col-sm-6 col-12 mb-4">
-            <div class="card rounded-3 shadow-sm">
+            <div class="card rounded-3 shadow-sm unclickable">
               <div class="card-body"> 
                 <h5 class="card-title">Работайте в любом месте</h5>
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
                 <p class="card-text">Ваши заметки одинаково удобно использовать с любого устройства.</p>
               </div>
               <div class="card-tag-list border-top">
-                <div class="card-tag tag-light-blue shadow-sm">Возможности</div>
+                <div class="card-tag tag-light-blue shadow-sm unclickable">Возможности</div>
               </div>
             </div>
           </div>
