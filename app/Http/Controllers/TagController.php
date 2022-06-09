@@ -15,11 +15,11 @@ class TagController extends Controller
     public function fetchAll()
     {
         $tags = DB::table('tags')
-        ->leftJoin('tags_types', 'tags.tags_type_id', '=', 'tags_types.id')
-        ->select('tags.id', 'tags.name', 'tags_types.type')
-        ->where('author', Auth::user()->name)
-        ->orderBy('created_at', 'desc')
-        ->get();     
+            ->leftJoin('tags_types', 'tags.tags_type_id', '=', 'tags_types.id')
+            ->select('tags.id', 'tags.name', 'tags_types.type')
+            ->where('author', Auth::user()->name)
+            ->orderBy('created_at', 'desc')
+            ->get();     
 
         return response()->json([
             'tags' => $tags
@@ -31,6 +31,7 @@ class TagController extends Controller
         $notes = Note::shortNote(
             Tag::find($id)
             ->notes()
+            ->orderBy('created_at', 'desc')
             ->with('tags.tagsType')
             ->get()
         );

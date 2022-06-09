@@ -20,8 +20,8 @@ Route::get('/', [NoteController::class, 'index'])->name('index');
 Route::middleware('auth')->group(function () {
     Route::get('/notes', [NoteController::class, 'notes'])->name('notes');
     Route::get('/fetch-all-notes', [NoteController::class, 'fetchAll']);
-    // Route::get('/fetch-by-tag-notes/{id}', [NoteController::class, 'fetchByTag']);
     Route::get('/fetch-deleted-notes', [NoteController::class, 'fetchDeleted']);
+    Route::get('/fetch-archived-notes', [NoteController::class, 'fetchArchived']);
     Route::post('/add-note', [NoteController::class, 'store']);
     Route::get('/edit-note/{id}', [NoteController::class, 'edit']);
     Route::put('/update-note/{id}', [NoteController::class, 'update']);

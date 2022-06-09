@@ -6,6 +6,8 @@ use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class NoteController extends Controller
@@ -22,47 +24,67 @@ class NoteController extends Controller
 
     public function fetchAll()
     {
-        // $notes = Note::shortNote(
-        //     Note::where('author', Auth::user()->name)->orderBy('created_at', 'desc')
-        //     ->with('tags')
-        //     ->get()
-        // );
-
         $notes = Note::shortNote(
-            Note::where('author', Auth::user()->name)->orderBy('created_at', 'desc')
+            Note::where('author', Auth::user()->name)
+            ->where('archived', 0)
+            ->orderBy('created_at', 'desc')
             ->with('tags.tagsType')
             ->get()
         );
 
+        foreach ($notes as $note) {
+            if ($note['photo'] !== NULL) {
+                $url = '';
+                $url = Storage::disk('public')->url('images/' . $note['photo']);
+                $note['photo'] = $url;
+            }
+        }
+        
+        return response()->json([
+            'notes' => $notes
+        ]);
+    }
+
+    public function fetchDeleted()
+    {
+        $notes = Note::shortNote(
+            Note::where('author', Auth::user()->name)
+                ->onlyTrashed()
+                ->orderBy('deleted_at', 'desc')
+                ->with('tags.tagsType')
+                ->get()
+        );
+
+        foreach ($notes as $note) {
+            if ($note['photo'] !== NULL) {
+                $url = '';
+                $url = Storage::disk('public')->url('images/' . $note['photo']);
+                $note['photo'] = $url;
+            }
+        }
 
         return response()->json([
             'notes' => $notes
         ]);
     }
 
-    // public function fetchByTag($id)
-    // {
-    //     $notes = Note::shortNote(
-    //         Note::where('author', Auth::user()->name)->orderBy('created_at', 'desc')
-    //         ->with('tags')
-    //         ->get()
-    //     );
-
-
-    //     return response()->json([
-    //         'notes' => $notes
-    //     ]);
-    // }
-
-    public function fetchDeleted()
+    public function fetchArchived()
     {
-        // $notes = Note::shortNote(Note::where('author', Auth::user()->name)->onlyTrashed()->get());
-
         $notes = Note::shortNote(
-            Note::where('author', Auth::user()->name)->onlyTrashed()->orderBy('deleted_at', 'desc')
-            ->with('tags.tagsType')
-            ->get()
+            Note::where('author', Auth::user()->name)
+                ->where('archived', 1)
+                ->orderBy('deleted_at', 'desc')
+                ->with('tags.tagsType')
+                ->get()
         );
+
+        foreach ($notes as $note) {
+            if ($note['photo'] !== NULL) {
+                $url = '';
+                $url = Storage::disk('public')->url('images/' . $note['photo']);
+                $note['photo'] = $url;
+            }
+        }
 
         return response()->json([
             'notes' => $notes
@@ -85,10 +107,22 @@ class NoteController extends Controller
         } 
         else 
         {
+            $fileName = NULL;
+            if($request->hasFile('photo'))
+            {
+                $fileName = '';
+                $photo = $request->file('photo');
+                $fileName = time() . "." . $photo->getClientOriginalExtension();
+                Image::make($photo)->save(storage_path('app/public/images/' . $fileName));
+            }
+
+            
             $note = new Note;
+            $note->photo = $fileName;
             $note->title = htmlspecialchars($request->input('title'));
             $note->subtitle = htmlspecialchars($request->input('subtitle'));
             $note->content = htmlspecialchars($request->input('content'));
+            $note->archived = htmlspecialchars($request->input('archive'));
             $note->author = Auth::user()->name;
             $note->save();
 
@@ -107,6 +141,10 @@ class NoteController extends Controller
         $note = Note::find($id);
         if($note)
         {
+            if ($note['photo'] !== NULL) {
+                $url = Storage::disk('public')->url('images/' . $note['photo']);
+                $note['photo'] = $url;
+            }
             $note->tags;
             return response()->json([
                 'status' => 200,
@@ -142,12 +180,13 @@ class NoteController extends Controller
             
             if($note)
             {
+
                 $note->title = htmlspecialchars($request->input('title'));
                 $note->subtitle = htmlspecialchars($request->input('subtitle'));
                 $note->content = htmlspecialchars($request->input('content'));
+                $note->archived = htmlspecialchars($request->input('archive'));
                 $note->update();
 
-                
                 $note->tags()->detach($note->tags);
                 $note->tags()->attach($request->input('tags'));
 

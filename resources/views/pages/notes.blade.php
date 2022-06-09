@@ -74,7 +74,7 @@
       <div id="success_message"></div>
       <div class="row" id="FetchNotes" data-masonry='{"percentPosition": true }'>  
 
-        {{-- <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+       {{--  <div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
           <div class="card rounded-3 shadow-sm edit_note" value="100">
             <div class="card-body"> 
               <h5 class="card-title">Заголовок...</h5>
@@ -321,16 +321,24 @@
   <div class="modal fade" id="EditNoteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md 1modal-dialog-scrollable">
       <div class="modal-content">
+        <div id="edit_note_photo"></div>
+
         <div class="modal-body">
-          <ul id="updateform_errList"></ul>
-          <input type="hidden" id="edit_note_id">
+          {{-- <ul id="updateform_errList"></ul> --}}
+          <input id="edit_note_id" type="hidden">
+          <input id="edit_note_archive_value" type="hidden">
+          
           <h5><div id="edit_note_title" class="title form-control-plaintext" contenteditable="true" data-placeholder="Заголовок" type="text"></div></h5>
           <h6><div id="edit_note_subtitle" class="subtitle text-muted form-control-plaintext" contenteditable="true" data-placeholder="Подзаголовок..." type="text"></div></h6>
           <div id="edit_note_content" class="content form-control-plaintext" contenteditable="true" data-placeholder="Заметка..." type="text"></div>   
+          
+          <input id="edit_note_image" class="file-hide mt-2" type="file">
         </div>
         <div class="modal-footer d-flex justify-content-between border-top">
           <div class="d-flex">
-            <img class="icon me-3" src="/img/img.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить фото">
+            <label for="edit_note_image" class="d-flex align-items-center">
+              <img class="icon me-3" src="/img/img.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить фото">
+            </label>
             <div class="dropdown">
               <a class="d-flex align-items-center justify-content-center" id="dropdownEditNoteSelectTag" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="icon me-3" src="/img/tag.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить категорию">
@@ -339,7 +347,7 @@
                 
               </ul>
             </div>
-            <img class="icon me-3" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">       
+            <div id="edit_note_archive" class="d-flex align-items-center justify-content-center"></div>     
             <img class="icon delete_note" src="/img/delete.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Удалить заметку">
           </div>
           <div class="d-flex">
@@ -356,16 +364,23 @@
   <div class="modal fade" id="AddNoteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-md 1modal-dialog-scrollable">
         <div class="modal-content">
+          <div id="add_note_photo"></div>
+
           <div class="modal-body">
-            <ul id="saveform_errList"></ul>
-    
+            <input id="add_note_archive_value" type="hidden">
+            {{-- <ul id="saveform_errList"></ul> --}}
+            
             <h5><div id="add_note_title" class="title form-control-plaintext" contenteditable="true" data-placeholder="Заголовок..." type="text"></div></h5> 
             <h6><div id="add_note_subtitle" class="subtitle text-muted form-control-plaintext" contenteditable="true" data-placeholder="Подзаголовок..." type="text"></div></h6>     
             <div id="add_note_content" class="content form-control-plaintext" contenteditable="true" data-placeholder="Заметка..." type="text"></div>  
+
+            <input id="add_note_image" class="file-hide" type="file">
           </div>
           <div class="modal-footer d-flex justify-content-between border-top">
             <div class="d-flex">
-              <img class="icon me-3" src="/img/img.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить фото">
+              <label for="add_note_image" class="d-flex align-items-center">
+                <img class="icon me-3" src="/img/img.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить фото">
+              </label>
               <div class="dropdown">
                 <a class="d-flex align-items-center justify-content-center" id="dropdownAddNoteSelectTag" data-bs-toggle="dropdown" aria-expanded="false">
                   <img class="icon me-3" src="/img/tag.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Добавить категорию">
@@ -374,7 +389,8 @@
                     
                 </ul>
               </div>
-              <img class="icon" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
+              <div id="add_note_archive" class="d-flex align-items-center justify-content-center"></div>
+              
             </div>
             <div class="d-flex">
               
@@ -393,7 +409,7 @@
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-body">
-          <ul id="updateform_errList"></ul>
+          {{-- <ul id="updateform_errList"></ul> --}}
           <input type="hidden" id="edit_tag_id">
           <input type="hidden" id="edit_tag_type">
           <h5><div contenteditable="true" data-placeholder="Категория..." type="text" id="edit_tag_name" class="title form-control-plaintext"></div></h5>  
@@ -460,31 +476,77 @@
         fetchAllTags();
         fetchTagsTypes();
 
-        // var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        // var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        //   return new bootstrap.Tooltip(tooltipTriggerEl);
-        // })
-
         $('body').tooltip({
           selector: '[data-bs-toggle="tooltip"]'
         });
-
-        // $('body').tooltip({
-        //     selector: '.icon-sm'
-        // });
-
-        var $container = $("#FetchNotes");
-
-        $( document ).ajaxComplete(function() {
-          $container.masonry('reloadItems').masonry();
-          $container.masonry('reloadItems').masonry();
+        
+        var $container = $("#FetchNotes"); 
+        $( document ).ajaxComplete(function() {  
+          $( document ).imagesLoaded( function() {      
+            $container.masonry('reloadItems').masonry();
+          });
         });
+         
+        
 
         $('[contenteditable]').on('paste', function (e) { 		
           e.preventDefault();     
           var pastedData = e.originalEvent.clipboardData.getData('text');     
           var selection = window.getSelection().toString();     
         document.execCommand('inserttext', false, pastedData); });
+
+        function fetchArchivedNotes() 
+        {
+          $.ajax({
+            type: "GET",
+            url: "/fetch-archived-notes",
+            data: "json",
+            success: function (response) {
+              console.log(response);
+
+              $.each(response.notes, function (key, item) { 
+                
+                  let tagsDivs = '';
+                  let imgDivs = '';
+                  
+                  const renderTags = (tags) => {
+                    tags.forEach((tag) => {
+                      tagsDivs += `<div class="card-tag ${tag.tags_type.type} shadow-sm">${tag.name}</div>`;
+                    });
+                  };
+                  
+                  const renderImg = () => {
+                  if(item.photo){
+                    // console.log(item.photo);
+                    imgDivs += `<img src="${item.photo}" class="card-img shadow-sm" alt="...">`;
+                  }
+                  };
+                
+                  renderTags(item.tags);
+                  renderImg();
+                                 
+                   $('#FetchNotes').append(
+                    `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+                      <div class="card rounded-3 shadow-sm edit_note" value="${item.id}">
+                          ${imgDivs}
+                        <div class="card-body">
+                          <h5 class="card-title">${item.title}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">${item.subtitle}</h6>
+                          <p class="card-text">${item.content}</p>
+                        </div>
+                        <div class="card-tag-list border-top">
+                          ${tagsDivs}
+                        </div>
+                      </div>
+                    </div>`
+                   );
+
+                });
+             
+            }
+          });
+
+        }
 
         function fetchDeletedNotes() 
         {
@@ -496,17 +558,30 @@
               console.log(response);
 
               $.each(response.notes, function (key, item) { 
+                
                   let tagsDivs = '';
+                  let imgDivs = '';
+                  
                   const renderTags = (tags) => {
                     tags.forEach((tag) => {
                       tagsDivs += `<div class="card-tag ${tag.tags_type.type} shadow-sm">${tag.name}</div>`;
                     });
                   };
+                  
+                  const renderImg = () => {
+                  if(item.photo){
+                    // console.log(item.photo);
+                    imgDivs += `<img src="${item.photo}" class="card-img shadow-sm" alt="...">`;
+                  }
+                  };
+                
                   renderTags(item.tags);
+                  renderImg();
                                  
                    $('#FetchNotes').append(
                     `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
                       <div class="card rounded-3 shadow-sm" value="${item.id}">
+                          ${imgDivs}
                         <div class="card-body">
                           <h5 class="card-title">${item.title}</h5>
                           <h6 class="card-subtitle mb-2 text-muted">${item.subtitle}</h6>
@@ -535,18 +610,33 @@
             success: function (response) {
               console.log(response);
 
+              
                 $.each(response.notes, function (key, item) { 
+
                   let tagsDivs = '';
+                  let imgDivs = '';
+                  
                   const renderTags = (tags) => {
                     tags.forEach((tag) => {
                       tagsDivs += `<div class="card-tag ${tag.tags_type.type} shadow-sm">${tag.name}</div>`;
                     });
                   };
+                  
+                  const renderImg = () => {
+                  if(item.photo){
+                    // console.log(item.photo);
+                    imgDivs += `<img src="${item.photo}" class="card-img shadow-sm" alt="...">`;
+                  }
+                  };
+                
+                  // <img src="/img/notes-img3.jpg" class="card-img shadow-sm" alt="...">
                   renderTags(item.tags);
+                  renderImg();
                                  
                    $('#FetchNotes').append(
                     `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
                       <div class="card rounded-3 shadow-sm edit_note" value="${item.id}">
+                          ${imgDivs}
                         <div class="card-body">
                           <h5 class="card-title">${item.title}</h5>
                           <h6 class="card-subtitle mb-2 text-muted">${item.subtitle}</h6>
@@ -578,6 +668,53 @@
           fetchDeletedNotes();
         });
 
+        $(document).on('click', '.archived', function (e) {
+        e.preventDefault();
+          $('#FetchNotes').html("");
+          fetchArchivedNotes();
+        });
+
+        $(document).on('click', '#edit_note_archive_active', function (e) {
+        e.preventDefault();
+          $('#edit_note_archive_value').val("0");
+          $('#edit_note_archive').text("");
+          $('#edit_note_archive').append(`
+            <img id="edit_note_archive_inactive" class="icon me-3" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+          `);
+          $(".tooltip").tooltip("hide");
+        });
+
+        $(document).on('click', '#edit_note_archive_inactive', function (e) {
+        e.preventDefault();
+          $('#edit_note_archive_value').val("1");
+          $('#edit_note_archive').text("");
+          $('#edit_note_archive').append(`
+            <img id="edit_note_archive_active" class="icon me-3" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
+          `);
+          $(".tooltip").tooltip("hide");
+        });
+
+        $(document).on('click', '#add_note_archive_active', function (e) {
+        e.preventDefault();
+          $('#add_note_archive_value').val("0");
+          $('#add_note_archive').text("");
+          $('#add_note_archive').append(`
+            <img id="add_note_archive_inactive" class="icon" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+          `);
+          $(".tooltip").tooltip("hide");
+        });
+
+        $(document).on('click', '#add_note_archive_inactive', function (e) {
+        e.preventDefault();
+          $('#add_note_archive_value').val("1");
+          $('#add_note_archive').text("");
+          $('#add_note_archive').append(`
+            <img id="add_note_archive_active" class="icon" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
+          `);
+          $(".tooltip").tooltip("hide");
+        });
+
+
         $(document).on('click', '.notes_by_tag', function (e) {
         e.preventDefault();
 
@@ -585,6 +722,55 @@
 
         $('#FetchNotes').html("");
           fetchNotesByTag(id);
+        });
+
+        $(document).on('change', '#edit_note_image', function (e) {
+        e.preventDefault();
+          $('#edit_note_photo').html("");
+          // $('#edit_note_image').val("");
+          $('#edit_note_photo').append(`<img id="edit_note_photo_preview" src="" class="card-img shadow-sm" alt="...">`);
+          $('#edit_note_photo').append(`
+          <div id="edit_note_delete_img" class="delete_img_btn">
+            <img class="icon-sm" src="/img/delete-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Удалить фото">
+          </div>`);
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var image =  $('#edit_note_photo_preview').attr('src', e.target.result);
+          }
+          reader.readAsDataURL($('#edit_note_image')[0].files[0]);
+
+        });
+
+        $(document).on('click', '#edit_note_delete_img', function (e) {
+        e.preventDefault();
+          $('#edit_note_photo').html("");
+          $('#edit_note_image').val("");
+          $(".tooltip").tooltip("hide");
+          // console.log($('#edit_note_image')[0].files[0]);
+        });
+
+        $(document).on('change', '#add_note_image', function (e) {
+        e.preventDefault();
+          $('#add_note_photo').html("");
+          // $('#add_note_image').val("");
+          $('#add_note_photo').append(`<img id="add_note_photo_preview" src="" class="card-img shadow-sm" alt="...">`);
+          $('#add_note_photo').append(`
+          <div id="add_note_delete_img" class="delete_img_btn">
+            <img class="icon-sm" src="/img/delete-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Удалить фото">
+          </div>`);
+          var reader = new FileReader();
+          reader.onload = function (e) {
+            var image =  $('#add_note_photo_preview').attr('src', e.target.result);
+          }
+          reader.readAsDataURL($('#add_note_image')[0].files[0]);
+
+        });
+
+        $(document).on('click', '#add_note_delete_img', function (e) {
+        e.preventDefault();
+          $('#add_note_photo').html("");
+          $('#add_note_image').val("");
+          $(".tooltip").tooltip("hide");
         });
 
         $(document).on('click', '.delete_note', function (e) {
@@ -618,6 +804,7 @@
             $(".update_note").prop('disabled', true);
             
             var id = $('#edit_note_id').attr('value');
+            var archiveId = $('#edit_note_archive_value').attr('value');
 
             var tags = [];
             $('#EditNoteFetchTags input:checkbox:checked').each(function() {
@@ -629,7 +816,17 @@
                 'subtitle': $('#edit_note_subtitle').text(), 
                 'content': $('#edit_note_content').text(),
                 'tags' : tags,
+                'archive' : archiveId,
             }
+
+            //
+            // var formData = new FormData();
+            // formData.append('photo', $('#edit_note_image')[0].files[0]);
+            // formData.append('title', $('#edit_note_title').text());
+            // formData.append('subtitle', $('#edit_note_subtitle').text());
+            // formData.append('content', $("#edit_note_content").text());
+            // formData.append('tags', tags);
+            //
 
             $.ajaxSetup({
                 headers: {
@@ -642,7 +839,12 @@
                 url: "/update-note/"+id,
                 data: data,
                 dataType: "json",
+                // processData: false,
+                // contentType: false,
                 success: function (response) {
+                  // console.log(response.status);
+                  // console.log(response.photo);
+                  
                   if(response.status == 400) 
                   {
                     $('#updateform_errList').html("");
@@ -697,10 +899,30 @@
                     $('#updateform_errList').html("");
                     $('#updateform_errList').removeClass();
                     $('#EditNoteModal').modal('show');
+                    
                     $('#edit_note_id').val(response.note.id);
+                    $('#edit_note_photo').html("");
+                    $('#edit_note_image').val("");
+                    if(response.note.photo){
+                      $('#edit_note_photo').html(`<img id="edit_note_photo_preview" src="${response.note.photo}" class="card-img shadow-sm" alt="...">`);
+                      $('#edit_note_photo').append(`
+                        <div id="edit_note_delete_img" class="delete_img_btn">
+                          <img class="icon-sm" src="/img/delete-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Удалить фото">
+                        </div>`);
+                    }
                     $('#edit_note_title').html(response.note.title);
                     $('#edit_note_subtitle').html(response.note.subtitle);
-                    $("#edit_note_content").html(response.note.content)
+                    $("#edit_note_content").html(response.note.content);
+                    $('#edit_note_archive').html("");
+                    if(response.note.archived == 1){
+                      $('#edit_note_archive').append(`
+                        <img id="edit_note_archive_active" class="icon me-3" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+                      `);
+                    } else {
+                      $('#edit_note_archive').append(`
+                      <img id="edit_note_archive_inactive" class="icon me-3" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+                      `);
+                    }
                     $('#EditNoteFetchTags').html("");
                     EditNotefetchAllTags();
 
@@ -733,19 +955,22 @@
             e.preventDefault();
             $(".add_note").prop('disabled', true);
 
+            var archiveId = $('#add_note_archive_value').attr('value');
+
             var tags = [];
             $('#AddNoteFetchTags input:checkbox:checked').each(function() {
               tags.push($(this).val());
             });
 
-            var data = {
-                'title': $('#add_note_title').text(), 
-                'subtitle': $('#add_note_subtitle').text(),
-                'content': $("#add_note_content").text(),
-                'tags' : tags
-            }
+            var formData = new FormData();
 
-            console.log(data);
+            formData.append('photo', $('#add_note_image')[0].files[0]);
+            formData.append('title', $('#add_note_title').text());
+            formData.append('subtitle', $('#add_note_subtitle').text());
+            formData.append('content', $("#add_note_content").text());
+            formData.append('tags', tags);
+            formData.append('archive', archiveId);
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -755,9 +980,12 @@
             $.ajax({
                 type: "POST",
                 url: "/add-note",
-                data: data,
+                data: formData,
                 dataType: "json",
+                processData: false,
+                contentType: false,
                 success: function (response) {
+                  console.log(response);
                     if(response.status == 400)
                     {
                         $('#saveform_errList').html("");
@@ -787,9 +1015,16 @@
 
           $('#saveform_errList').html("");
           $('#saveform_errList').removeClass();
+          $('#add_note_photo').html("");
+          $('#add_note_image').val("");
+          // console.log($('#add_note_image')[0].files[0]);
           $('#add_note_title').html("");
           $('#add_note_subtitle').html("");
           $("#add_note_content").html("");
+          $('#add_note_archive').append(`
+            <img id="add_note_archive_inactive" class="icon" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+          `);
+          $('#add_note_archive_value').val("0");
           $('#AddNoteFetchTags').html("");
           AddNotefetchAllTags();
           $(".add_note").prop('disabled', false); 
@@ -899,8 +1134,8 @@
                 $.each(response.tags, function (key, item) {                
 
                   $('#EditNoteFetchTags').append(
-                    `<li class="dropdown-item align-items-center justify-content-between">
-                      <div class="rounded-circle tag-circle shadow-sm me-2 ${item.type}"></div>
+                    `<li class="dropdown-item align-items-center justify-content-between unclickable">
+                      <div class="rounded-circle tag-circle shadow-sm me-2 ${item.type} unclickable"></div>
                       <div class="dropdown-tag-text">${item.name}</div>
                       <input class="form-check-input ms-2 mt-0" type="checkbox" value="${item.id}">
                     </li>`

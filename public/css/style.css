@@ -207,6 +207,30 @@ body {
     padding: 0px;
 }
 
+.file-hide{
+    display: none;
+}
+
+.delete_img_btn{
+    /* background-color: #e23030; */
+    background-color: #212529;
+    opacity: 0.6;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.delete_img_btn:hover{
+    opacity: 1;
+    cursor: pointer;
+}
+
 .card-tag-list{
     padding: 0px 1rem 8px 1rem;
 }
