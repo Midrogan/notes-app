@@ -14,10 +14,6 @@ return new class extends Migration
     public function up()
     {
         Schema::table('notes', function (Blueprint $table) {
-            $table->after('content', function ($table) {
-                $table->string('photo');
-            });
-
             $table->after('author', function ($table) {
                 $table->boolean('archived')->default(false);
             });
