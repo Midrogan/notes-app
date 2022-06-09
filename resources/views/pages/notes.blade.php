@@ -842,9 +842,7 @@
                 // processData: false,
                 // contentType: false,
                 success: function (response) {
-                  // console.log(response.status);
-                  // console.log(response.photo);
-                  
+
                   if(response.status == 400) 
                   {
                     $('#updateform_errList').html("");
@@ -914,6 +912,7 @@
                     $('#edit_note_subtitle').html(response.note.subtitle);
                     $("#edit_note_content").html(response.note.content);
                     $('#edit_note_archive').html("");
+                    $('#edit_note_archive_value').val(response.note.archived);
                     if(response.note.archived == 1){
                       $('#edit_note_archive').append(`
                         <img id="edit_note_archive_active" class="icon me-3" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">

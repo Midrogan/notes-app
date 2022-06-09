@@ -17,6 +17,7 @@ class Note extends Model
         'subtitle',
         'content',
     ];
+    
     // protected $dates = ['deleted_at'];
     // protected $appends = array('short_title','short_subtitle','short_content');
 

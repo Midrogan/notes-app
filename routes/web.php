@@ -36,4 +36,5 @@ Route::middleware('auth')->group(function () {
     Route::delete('/delete-tag/{id}', [TagController::class, 'destroy']);
 });
 
+
 require __DIR__.'/auth.php';
