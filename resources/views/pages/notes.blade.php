@@ -1020,6 +1020,7 @@
           $('#add_note_title').html("");
           $('#add_note_subtitle').html("");
           $("#add_note_content").html("");
+          $("#add_note_archive").html("");
           $('#add_note_archive').append(`
             <img id="add_note_archive_inactive" class="icon" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
           `);

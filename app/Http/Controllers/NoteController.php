@@ -17,11 +17,6 @@ class NoteController extends Controller
         return view('pages.index');
     }
 
-    public function ix()
-    {
-        return view('pages.index');
-    }
-
     public function notes()
     {   
         return view('pages.notes');
