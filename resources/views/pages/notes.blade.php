@@ -677,6 +677,7 @@
                     imgDivs += `<img src="${item.photo}" class="card-img shadow-sm" alt="...">`;
                   }
                   };
+                  
                 
                   // <img src="/img/notes-img3.jpg" class="card-img shadow-sm" alt="...">
                   renderTags(item.tags);
@@ -1234,17 +1235,29 @@
               console.log(response);
 
                 $.each(response.notes, function (key, item) { 
+                  
                   let tagsDivs = '';
+                  let imgDivs = '';
+
+                  const renderImg = () => {
+                  if(item.photo){
+                    // console.log(item.photo);
+                    imgDivs += `<img src="${item.photo}" class="card-img shadow-sm" alt="...">`;
+                  }
+                  };
+                  
                   const renderTags = (tags) => {
                     tags.forEach((tag) => {
                       tagsDivs += `<div class="card-tag ${tag.tags_type.type} shadow-sm">${tag.name}</div>`;
                     });
                   };
                   renderTags(item.tags);
+                  renderImg();
                                  
                    $('#FetchNotes').append(
                     `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
                       <div class="card rounded-3 shadow-sm edit_note" value="${item.id}">
+                        ${imgDivs}
                         <div class="card-body">
                           <h5 class="card-title">${item.title}</h5>
                           <h6 class="card-subtitle mb-2 text-muted">${item.subtitle}</h6>

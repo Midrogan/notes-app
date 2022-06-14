@@ -8,6 +8,7 @@ use App\Models\TagsType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
@@ -35,6 +36,17 @@ class TagController extends Controller
             ->with('tags.tagsType')
             ->get()
         );
+
+        foreach ($notes as $note) {
+            if ($note['photo'] !== NULL) {
+                $url = '';
+                $url = Storage::disk('s3')->temporaryUrl(
+                    'images/' . $note->filename, now()->addMinutes(5)
+                );                
+       
+                $note['photo'] = $url;
+            }
+        }
 
         return response()->json([
             'notes' => $notes
