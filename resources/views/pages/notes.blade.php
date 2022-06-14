@@ -316,11 +316,42 @@
       </div>
   </div>
   {{-- End- AddListModal --}}
+    
+  {{-- DeletedNoteModal --}}
+  <div class="modal fade" id="DeletedNoteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md 1modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <div id="deleted_note_photo"></div>
+
+        <div class="modal-body">
+        
+          <input id="deleted_note_id" type="hidden">
+          
+          <h5><div id="deleted_note_title" class="title form-control-plaintext"></div></h5>
+          <h6 class="subtitle-box"><div id="deleted_note_subtitle" class="subtitle text-muted form-control-plaintext"></div></h6>
+          <div id="deleted_note_content" class="content form-control-plaintext"></div>   
+
+        </div>
+        <div class="modal-footer d-flex justify-content-between border-top">
+          <div class="d-flex">
+            <img class="icon restore_deleted_note me-3" src="/img/restore.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Восстановить заметку">  
+            <img class="icon delete_deleted_note" src="/img/delete.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Удалить заметку навсегда">
+          </div>
+          <div class="d-flex">
+            <button type="button" class="btn btn-sm btn-light" data-bs-dismiss="modal">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{-- End- DeletedNoteModal --}}
 
   {{-- EditNoteModal --}}
   <div class="modal fade" id="EditNoteModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md 1modal-dialog-scrollable">
       <div class="modal-content">
+
         <div id="edit_note_photo"></div>
 
         <div class="modal-body">
@@ -390,6 +421,7 @@
                 </ul>
               </div>
               <div id="add_note_archive" class="d-flex align-items-center justify-content-center"></div>
+              
               
             </div>
             <div class="d-flex">
@@ -557,6 +589,8 @@
             success: function (response) {
               console.log(response);
 
+
+
               $.each(response.notes, function (key, item) { 
                 
                   let tagsDivs = '';
@@ -580,7 +614,7 @@
                                  
                    $('#FetchNotes').append(
                     `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
-                      <div class="card rounded-3 shadow-sm" value="${item.id}">
+                      <div class="card rounded-3 shadow-sm restore_note" value="${item.id}">
                           ${imgDivs}
                         <div class="card-body">
                           <h5 class="card-title">${item.title}</h5>
@@ -594,7 +628,7 @@
                     </div>`
                    );
 
-                });
+              });
              
             }
           });
@@ -610,7 +644,22 @@
             success: function (response) {
               console.log(response);
 
-              
+              // $('#FetchNotes').append(
+              //       `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
+              //         <div class="card rounded-3 shadow-sm edit_note" value="">
+              //           <img src="${response.url}" class="card-img shadow-sm" alt="...">
+              //           <div class="card-body">
+              //             <h5 class="card-title"></h5>
+              //             <h6 class="card-subtitle mb-2 text-muted"></h6>
+              //             <p class="card-text"></p>
+              //           </div>
+              //           <div class="card-tag-list border-top">
+
+              //           </div>
+              //         </div>
+              //       </div>`
+              //      );
+
                 $.each(response.notes, function (key, item) { 
 
                   let tagsDivs = '';
@@ -658,6 +707,8 @@
 
         $(document).on('click', '.notes', function (e) {
         e.preventDefault();
+          $('#success_message').removeClass();
+          $('#success_message').html("");
           $('#FetchNotes').html("");
           fetchAllNotes();
         });
@@ -666,10 +717,27 @@
         e.preventDefault();
           $('#FetchNotes').html("");
           fetchDeletedNotes();
+          // $('#success_message').removeClass();
+          // $('#success_message').html("");
+          // $('#success_message').addClass("");
+          // $('#success_message').append(
+          //   `<div class="col-12 alert alert-danger">
+          //       <div class="row d-flex align-items-center justify-content-center">
+          //         <div class="col-xxl-5 col-xl-6 col-md-7 col-12">
+          //           <h6 class="mb-md-0 mb-2">Заметки автоматически удаляются из корзины через 30 дней</h6>
+          //         </div>
+          //         <div class="col-xxl-2 col-xl-3 col-md-4 col-12">
+          //           <div id"delete_all_deleted_note" class="btn btn-sm btn-danger" type="button">Очистить корзину</div>
+          //         </div>
+          //       </div>
+          //   </div>`
+          // );
         });
 
         $(document).on('click', '.archived', function (e) {
         e.preventDefault();
+          $('#success_message').removeClass();
+          $('#success_message').html("");
           $('#FetchNotes').html("");
           fetchArchivedNotes();
         });
@@ -679,7 +747,7 @@
           $('#edit_note_archive_value').val("0");
           $('#edit_note_archive').text("");
           $('#edit_note_archive').append(`
-            <img id="edit_note_archive_inactive" class="icon me-3" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+            <img id="edit_note_archive_inactive" class="icon me-3" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
           `);
           $(".tooltip").tooltip("hide");
         });
@@ -689,7 +757,7 @@
           $('#edit_note_archive_value').val("1");
           $('#edit_note_archive').text("");
           $('#edit_note_archive').append(`
-            <img id="edit_note_archive_active" class="icon me-3" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
+            <img id="edit_note_archive_active" class="icon me-3" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
           `);
           $(".tooltip").tooltip("hide");
         });
@@ -699,7 +767,7 @@
           $('#add_note_archive_value').val("0");
           $('#add_note_archive').text("");
           $('#add_note_archive').append(`
-            <img id="add_note_archive_inactive" class="icon" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+            <img id="add_note_archive_inactive" class="icon" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
           `);
           $(".tooltip").tooltip("hide");
         });
@@ -709,7 +777,7 @@
           $('#add_note_archive_value').val("1");
           $('#add_note_archive').text("");
           $('#add_note_archive').append(`
-            <img id="add_note_archive_active" class="icon" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
+            <img id="add_note_archive_active" class="icon" src="/img/archive.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
           `);
           $(".tooltip").tooltip("hide");
         });
@@ -719,7 +787,8 @@
         e.preventDefault();
 
         var id = $(this).attr('value');
-
+        $('#success_message').removeClass();
+        $('#success_message').html("");
         $('#FetchNotes').html("");
           fetchNotesByTag(id);
         });
@@ -771,6 +840,102 @@
           $('#add_note_photo').html("");
           $('#add_note_image').val("");
           $(".tooltip").tooltip("hide");
+        });
+
+         
+        $(document).on('click', '.delete_deleted_note', function (e) {
+          e.preventDefault();
+          $(".delete_deleted_note").prop('disabled', true);
+
+          var id = $('#deleted_note_id').attr('value');
+
+          $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+          $.ajax({
+                type: "DELETE",
+                url: "/forse-delete-note/"+id,
+                success: function (response) {
+                  console.log(response);
+                  $('#success_message').addClass('alert alert-success');
+                  $('#success_message').text(response.message);
+                  $('#DeletedNoteModal').modal('hide');
+                  $('#FetchNotes').html("");
+                  fetchDeletedNotes();
+                  setTimeout(closeSuccess, 3000);
+                }
+              });
+        });
+
+        $(document).on('click', '.restore_deleted_note', function (e) {
+          e.preventDefault();
+          $(".restore_deleted_note").prop('disabled', true);
+
+          var id = $('#deleted_note_id').attr('value');
+
+          $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+          $.ajax({
+                type: "PUT",
+                url: "/restore-note/"+id,
+                success: function (response) {
+                  console.log(response);
+                  $('#success_message').addClass('alert alert-success');
+                  $('#success_message').text(response.message);
+                  $('#DeletedNoteModal').modal('hide');
+                  $('#FetchNotes').html("");
+                  fetchDeletedNotes();
+                  setTimeout(closeSuccess, 3000);
+                }
+              });
+        });
+
+        $(document).on('click', '.restore_note', function (e) {
+            e.preventDefault();
+
+            var id = $(this).attr('value');
+
+            $.ajax({
+                type: "GET",
+                url: "/edit-note/"+id,
+                success: function (response) {
+                  console.log(response);
+                  if (response.status == 404) 
+                  {
+                    $('#success_message').html("");
+                    $('#success_message').addClass('alert alert-danger');
+                    $('#success_message').text(response.message);
+                    setTimeout(closeSuccess, 3000);
+                  } 
+                  else 
+                  {
+                    $('#updateform_errList').html("");
+                    $('#updateform_errList').removeClass();
+                    $('#DeletedNoteModal').modal('show');
+                    
+                    $('#deleted_note_id').val(response.note.id);
+                    $('#deleted_note_photo').html("");
+                    $('#deleted_note_image').val("");
+                    if(response.note.photo){
+                      $('#deleted_note_photo').html(`<img id="edit_note_photo_preview" src="${response.note.photo}" class="card-img shadow-sm" alt="...">`);
+                    }
+                    $('#deleted_note_title').html(response.note.title);
+                    $('#deleted_note_subtitle').html(response.note.subtitle);
+                    $("#deleted_note_content").html(response.note.content);
+                    
+                  }
+
+                  $(".restore_deleted_note").prop('disabled', false);
+                  $(".delete_deleted_note").prop('disabled', false);
+                }
+            });
         });
 
         $(document).on('click', '.delete_note', function (e) {
@@ -919,7 +1084,7 @@
                       `);
                     } else {
                       $('#edit_note_archive').append(`
-                      <img id="edit_note_archive_inactive" class="icon me-3" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+                      <img id="edit_note_archive_inactive" class="icon me-3" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
                       `);
                     }
                     $('#EditNoteFetchTags').html("");
@@ -1022,7 +1187,7 @@
           $("#add_note_content").html("");
           $("#add_note_archive").html("");
           $('#add_note_archive').append(`
-            <img id="add_note_archive_inactive" class="icon" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Разархивировать">
+            <img id="add_note_archive_inactive" class="icon" src="/img/archive-light.png" alt="" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Архивировать">
           `);
           $('#add_note_archive_value').val("0");
           $('#AddNoteFetchTags').html("");

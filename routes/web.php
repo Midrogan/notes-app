@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit-note/{id}', [NoteController::class, 'edit']);
     Route::put('/update-note/{id}', [NoteController::class, 'update']);
     Route::delete('/delete-note/{id}', [NoteController::class, 'destroy']);
+    Route::put('/restore-note/{id}', [NoteController::class, 'restore']); 
+    Route::delete('/forse-delete-note/{id}', [NoteController::class, 'forseDestroy']);
 
     Route::get('/fetch-all-tags', [TagController::class, 'fetchAll']);
     Route::get('/fetch-notes-by-tag/{id}', [TagController::class, 'fetchNotesByTag']);
