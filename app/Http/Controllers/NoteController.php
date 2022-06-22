@@ -33,18 +33,18 @@ class NoteController extends Controller
         );
 
         foreach ($notes as $note) {
-            if ($note['photo'] !== NULL) {
-                
-                $url = '';
-                $url = Storage::disk('s3')->temporaryUrl(
-                    'images/' . $note->filename, now()->addMinutes(5)
-                );                
-       
-                $note['photo'] = $url;
+            if ($note['filename'] !== NULL) {
                 
                 // $url = '';
-                // $url = Storage::disk('public')->url('images/' . $note['photo']);
+                // $url = Storage::disk('s3')->temporaryUrl(
+                //     'images/' . $note->filename, now()->addMinutes(5)
+                // );                
+       
                 // $note['photo'] = $url;
+                
+                $url = '';
+                $url = Storage::disk('public')->url('images/' . $note['filename']);
+                $note['photo'] = $url;
                 
             }
         }
@@ -67,12 +67,16 @@ class NoteController extends Controller
         );
 
         foreach ($notes as $note) {
-            if ($note['photo'] !== NULL) {
-                $url = '';
-                $url = Storage::disk('s3')->temporaryUrl(
-                    'images/' . $note->filename, now()->addMinutes(5)
-                );                
+            if ($note['filename'] !== NULL) {
+                // $url = '';
+                // $url = Storage::disk('s3')->temporaryUrl(
+                //     'images/' . $note->filename, now()->addMinutes(5)
+                // );                
        
+                // $note['photo'] = $url;
+
+                $url = '';
+                $url = Storage::disk('public')->url('images/' . $note['photo']);
                 $note['photo'] = $url;
             }
         }
@@ -93,12 +97,16 @@ class NoteController extends Controller
         );
 
         foreach ($notes as $note) {
-            if ($note['photo'] !== NULL) {
-                $url = '';
-                $url = Storage::disk('s3')->temporaryUrl(
-                    'images/' . $note->filename, now()->addMinutes(5)
-                );                
+            if ($note['filename'] !== NULL) {
+                // $url = '';
+                // $url = Storage::disk('s3')->temporaryUrl(
+                //     'images/' . $note->filename, now()->addMinutes(5)
+                // );                
        
+                // $note['photo'] = $url;
+
+                $url = '';
+                $url = Storage::disk('public')->url('images/' . $note['photo']);
                 $note['photo'] = $url;
             }
         }
@@ -128,14 +136,15 @@ class NoteController extends Controller
             $url = NULL;
             if($request->hasFile('photo'))
             {
-                $path = $request->file('photo')->store('images', 's3');
+                // $path = $request->file('photo')->store('images', 's3');
 
-                $fileName = basename($path);
-                $url = Storage::disk('s3')->url($path);
-                // $fileName = '';
-                // $photo = $request->file('photo');
-                // $fileName = time() . "." . $photo->getClientOriginalExtension();
-                // Image::make($photo)->save(storage_path('app/public/images/' . $fileName));
+                // $fileName = basename($path);
+                // $url = Storage::disk('s3')->url($path);
+
+                $fileName = '';
+                $photo = $request->file('photo');
+                $fileName = time() . "." . $photo->getClientOriginalExtension();
+                Image::make($photo)->save(storage_path('app/public/images/' . $fileName));
             }
 
             
@@ -164,15 +173,16 @@ class NoteController extends Controller
         $note = Note::withTrashed()->find($id);
         if($note)
         {
-            if ($note['photo'] !== NULL) {
-                $url = '';
-                $url = Storage::disk('s3')->temporaryUrl(
-                    'images/' . $note->filename, now()->addMinutes(5)
-                );                
+            if ($note['filename'] !== NULL) {
+                // $url = '';
+                // $url = Storage::disk('s3')->temporaryUrl(
+                //     'images/' . $note->filename, now()->addMinutes(5)
+                // );                
        
-                $note['photo'] = $url;
-                // $url = Storage::disk('public')->url('images/' . $note['photo']);
                 // $note['photo'] = $url;
+
+                $url = Storage::disk('public')->url('images/' . $note->filename);
+                $note['photo'] = $url;
             }
             $note->tags;
             return response()->json([
