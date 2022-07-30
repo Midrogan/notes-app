@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Note;
+use App\Models\Note; 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Intervention\Image\Facades\Image;
@@ -33,19 +34,12 @@ class NoteController extends Controller
         );
 
         foreach ($notes as $note) {
-            if ($note['filename'] !== NULL) {
-                
-                // $url = '';
-                // $url = Storage::disk('s3')->temporaryUrl(
-                //     'images/' . $note->filename, now()->addMinutes(5)
-                // );                
-       
-                // $note['photo'] = $url;
-                
+            if ($note['filename'] !== NULL) {   
+
                 $url = '';
                 $url = Storage::disk('public')->url('images/' . $note['filename']);
-                $note['photo'] = $url;
-                
+                $note['photo'] = $url; 
+
             }
         }
 
@@ -68,16 +62,10 @@ class NoteController extends Controller
 
         foreach ($notes as $note) {
             if ($note['filename'] !== NULL) {
-                // $url = '';
-                // $url = Storage::disk('s3')->temporaryUrl(
-                //     'images/' . $note->filename, now()->addMinutes(5)
-                // );                
-       
-                // $note['photo'] = $url;
-
+                
                 $url = '';
-                $url = Storage::disk('public')->url('images/' . $note['photo']);
-                $note['photo'] = $url;
+                $url = Storage::disk('public')->url('images/' . $note['filename']);
+                $note['photo'] = $url; 
             }
         }
 
@@ -98,16 +86,10 @@ class NoteController extends Controller
 
         foreach ($notes as $note) {
             if ($note['filename'] !== NULL) {
-                // $url = '';
-                // $url = Storage::disk('s3')->temporaryUrl(
-                //     'images/' . $note->filename, now()->addMinutes(5)
-                // );                
-       
-                // $note['photo'] = $url;
 
                 $url = '';
-                $url = Storage::disk('public')->url('images/' . $note['photo']);
-                $note['photo'] = $url;
+                $url = Storage::disk('public')->url('images/' . $note['filename']);
+                $note['photo'] = $url; 
             }
         }
 
@@ -136,11 +118,6 @@ class NoteController extends Controller
             $url = NULL;
             if($request->hasFile('photo'))
             {
-                // $path = $request->file('photo')->store('images', 's3');
-
-                // $fileName = basename($path);
-                // $url = Storage::disk('s3')->url($path);
-
                 $fileName = '';
                 $photo = $request->file('photo');
                 $fileName = time() . "." . $photo->getClientOriginalExtension();
@@ -174,13 +151,6 @@ class NoteController extends Controller
         if($note)
         {
             if ($note['filename'] !== NULL) {
-                // $url = '';
-                // $url = Storage::disk('s3')->temporaryUrl(
-                //     'images/' . $note->filename, now()->addMinutes(5)
-                // );                
-       
-                // $note['photo'] = $url;
-
                 $url = Storage::disk('public')->url('images/' . $note->filename);
                 $note['photo'] = $url;
             }
@@ -221,14 +191,37 @@ class NoteController extends Controller
             if($note)
             {
 
+                $fileName = NULL;
+                $url = NULL;
+                if($request->hasFile('photo'))
+                {  
+                    if($note['filename'] !== NULL) {
+                        File::delete(storage_path('app/public/images/' . $note->filename));
+                    }
+                    $fileName = '';
+                    $photo = $request->file('photo');
+                    $fileName = time() . "." . $photo->getClientOriginalExtension();
+                    Image::make($photo)->save(storage_path('app/public/images/' . $fileName));
+                    $note->filename = $fileName;
+                    $note->photo = $url;
+                }
+
+                // if($filename == NULL){
+                //     if($note['filename'] !== NULL) {
+                //         File::delete(storage_path('app/public/images/' . $note->filename));
+                //     }
+                // }
+
+
                 $note->title = htmlspecialchars($request->input('title'));
                 $note->subtitle = htmlspecialchars($request->input('subtitle'));
                 $note->content = htmlspecialchars($request->input('content'));
                 $note->archived = htmlspecialchars($request->input('archive'));
                 $note->update();
 
-                $note->tags()->detach($note->tags);
-                $note->tags()->attach($request->input('tags'));
+                // $note->tags()->detach($note->tags);
+                // $note->tags()->attach($request->input('tags'));
+                $note->tags()->sync($request->input('tags'));
 
                 
                 return response()->json([
@@ -272,8 +265,11 @@ class NoteController extends Controller
     public function forseDestroy($id)
     {
         $note = Note::onlyTrashed()->find($id);
-        $note->forceDelete();
+        if ($note['filename'] !== NULL) {
+            File::delete(storage_path('app/public/images/' . $note->filename));
+        }
         $note->tags()->detach($note->tags);
+        $note->forceDelete();
 
         return response()->json([
             'status' => 200,

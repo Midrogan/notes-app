@@ -644,22 +644,6 @@
             success: function (response) {
               console.log(response);
 
-              // $('#FetchNotes').append(
-              //       `<div class="col-xxl-3 col-xl-4 col-md-6 col-sm-12 col-12 mb-4">
-              //         <div class="card rounded-3 shadow-sm edit_note" value="">
-              //           <img src="${response.url}" class="card-img shadow-sm" alt="...">
-              //           <div class="card-body">
-              //             <h5 class="card-title"></h5>
-              //             <h6 class="card-subtitle mb-2 text-muted"></h6>
-              //             <p class="card-text"></p>
-              //           </div>
-              //           <div class="card-tag-list border-top">
-
-              //           </div>
-              //         </div>
-              //       </div>`
-              //      );
-
                 $.each(response.notes, function (key, item) { 
 
                   let tagsDivs = '';
@@ -718,21 +702,6 @@
         e.preventDefault();
           $('#FetchNotes').html("");
           fetchDeletedNotes();
-          // $('#success_message').removeClass();
-          // $('#success_message').html("");
-          // $('#success_message').addClass("");
-          // $('#success_message').append(
-          //   `<div class="col-12 alert alert-danger">
-          //       <div class="row d-flex align-items-center justify-content-center">
-          //         <div class="col-xxl-5 col-xl-6 col-md-7 col-12">
-          //           <h6 class="mb-md-0 mb-2">Заметки автоматически удаляются из корзины через 30 дней</h6>
-          //         </div>
-          //         <div class="col-xxl-2 col-xl-3 col-md-4 col-12">
-          //           <div id"delete_all_deleted_note" class="btn btn-sm btn-danger" type="button">Очистить корзину</div>
-          //         </div>
-          //       </div>
-          //   </div>`
-          // );
         });
 
         $(document).on('click', '.archived', function (e) {
@@ -970,29 +939,27 @@
             $(".update_note").prop('disabled', true);
             
             var id = $('#edit_note_id').attr('value');
-            var archiveId = $('#edit_note_archive_value').attr('value');
+            // var archiveId = $('#edit_note_archive_value').attr('value');
 
-            var tags = [];
+            var formData = new FormData();
+
             $('#EditNoteFetchTags input:checkbox:checked').each(function() {
-              tags.push($(this).val());
+              formData.append('tags[]', $(this).val());
             });
 
-            var data = {
-                'title': $('#edit_note_title').text(), 
-                'subtitle': $('#edit_note_subtitle').text(), 
-                'content': $('#edit_note_content').text(),
-                'tags' : tags,
-                'archive' : archiveId,
+            formData.append('_method', 'PUT');
+            if($('#edit_note_image').get(0).files.length == 0){
+              formData.append('photo', null);
+            }else{
+              formData.append('photo', $('#edit_note_image')[0].files[0]);
             }
-
-            //
-            // var formData = new FormData();
-            // formData.append('photo', $('#edit_note_image')[0].files[0]);
-            // formData.append('title', $('#edit_note_title').text());
-            // formData.append('subtitle', $('#edit_note_subtitle').text());
-            // formData.append('content', $("#edit_note_content").text());
-            // formData.append('tags', tags);
-            //
+            
+            formData.append('title', $('#edit_note_title').text());
+            formData.append('subtitle', $('#edit_note_subtitle').text());
+            formData.append('content', $("#edit_note_content").text());
+            formData.append('archive', $('#edit_note_archive_value').attr('value'));   
+            
+            console.log(formData.get('photo'));
 
             $.ajaxSetup({
                 headers: {
@@ -1001,14 +968,14 @@
             });
 
             $.ajax({
-                type: "PUT",
+                type: "POST",
                 url: "/update-note/"+id,
-                data: data,
+                data: formData,
                 dataType: "json",
-                // processData: false,
-                // contentType: false,
+                processData: false,
+                contentType: false,
                 success: function (response) {
-
+                  console.log(response);
                   if(response.status == 400) 
                   {
                     $('#updateform_errList').html("");
@@ -1120,21 +1087,19 @@
             e.preventDefault();
             $(".add_note").prop('disabled', true);
 
-            var archiveId = $('#add_note_archive_value').attr('value');
-
-            var tags = [];
-            $('#AddNoteFetchTags input:checkbox:checked').each(function() {
-              tags.push($(this).val());
-            });
+            // var archiveId = $('#add_note_archive_value').attr('value');
 
             var formData = new FormData();
+
+            $('#AddNoteFetchTags input:checkbox:checked').each(function() {
+              formData.append('tags[]', $(this).val());
+            });
 
             formData.append('photo', $('#add_note_image')[0].files[0]);
             formData.append('title', $('#add_note_title').text());
             formData.append('subtitle', $('#add_note_subtitle').text());
             formData.append('content', $("#add_note_content").text());
-            formData.append('tags', tags);
-            formData.append('archive', archiveId);
+            formData.append('archive', $('#add_note_archive_value').attr('value'));
 
             $.ajaxSetup({
                 headers: {
